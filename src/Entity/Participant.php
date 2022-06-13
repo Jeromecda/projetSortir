@@ -15,7 +15,7 @@ class Participant
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private $idparticipant;
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -57,21 +57,9 @@ class Participant
      */
     private $actif;
 
-    public function getId(): ?int
+    public function getIdparticipant(): ?int
     {
-        return $this->id;
-    }
-
-    public function getNoParticipant(): ?int
-    {
-        return $this->no_participant;
-    }
-
-    public function setNoParticipant(int $no_participant): self
-    {
-        $this->no_participant = $no_participant;
-
-        return $this;
+        return $this->idparticipant;
     }
 
     public function getPseudo(): ?string

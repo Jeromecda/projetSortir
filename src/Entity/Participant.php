@@ -69,6 +69,12 @@ class Participant
      */
     private $sorties;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="participants")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $siteNoSite;
+
     public function __construct()
     {
         $this->inscription = new ArrayCollection();
@@ -226,6 +232,18 @@ class Participant
                 $sorty->setOrganisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSiteNoSite(): ?Site
+    {
+        return $this->siteNoSite;
+    }
+
+    public function setSiteNoSite(?Site $siteNoSite): self
+    {
+        $this->siteNoSite = $siteNoSite;
 
         return $this;
     }

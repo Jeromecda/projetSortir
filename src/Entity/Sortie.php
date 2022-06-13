@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SortieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +17,7 @@ class Sortie
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $idSortie;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -57,9 +59,37 @@ class Sortie
      */
     private $urlPhoto;
 
-    public function getIdSortie(): ?int
+    /**
+     * @ORM\ManyToOne(targetEntity=Etat::class, inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $etatNoEtat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $lieuNolieu;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Participant::class, mappedBy="inscription")
+     */
+    private $participants;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="sorties")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $organisateur;
+
+    public function __construct()
     {
-        return $this->idSortie;
+        $this->participants = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getNom(): ?string
@@ -154,6 +184,69 @@ class Sortie
     public function setUrlPhoto(?string $urlPhoto): self
     {
         $this->urlPhoto = $urlPhoto;
+
+        return $this;
+    }
+
+    public function getEtatNoEtat(): ?Etat
+    {
+        return $this->etatNoEtat;
+    }
+
+    public function setEtatNoEtat(?Etat $etatNoEtat): self
+    {
+        $this->etatNoEtat = $etatNoEtat;
+
+        return $this;
+    }
+
+    public function getLieuNolieu(): ?Lieu
+    {
+        return $this->lieuNolieu;
+    }
+
+    public function setLieuNolieu(?Lieu $lieuNolieu): self
+    {
+        $this->lieuNolieu = $lieuNolieu;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Participant>
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Participant $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->addInscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Participant $participant): self
+    {
+        if ($this->participants->removeElement($participant)) {
+            $participant->removeInscription($this);
+        }
+
+        return $this;
+    }
+
+    public function getOrganisateur(): ?Participant
+    {
+        return $this->organisateur;
+    }
+
+    public function setOrganisateur(?Participant $organisateur): self
+    {
+        $this->organisateur = $organisateur;
 
         return $this;
     }

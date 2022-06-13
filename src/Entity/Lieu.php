@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LieuRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,7 +17,7 @@ class Lieu
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $idLieu;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -37,9 +39,25 @@ class Lieu
      */
     private $longitude;
 
-    public function getIdLieu(): ?int
+    /**
+     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="lieus")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $villeNoVille;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="lieuNolieu", orphanRemoval=true)
+     */
+    private $sorties;
+
+    public function __construct()
     {
-        return $this->idLieu;
+        $this->sorties = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getNom(): ?string
@@ -86,6 +104,48 @@ class Lieu
     public function setLongitude(?float $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getVilleNoVille(): ?Ville
+    {
+        return $this->villeNoVille;
+    }
+
+    public function setVilleNoVille(?Ville $villeNoVille): self
+    {
+        $this->villeNoVille = $villeNoVille;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sortie>
+     */
+    public function getSorties(): Collection
+    {
+        return $this->sorties;
+    }
+
+    public function addSorty(Sortie $sorty): self
+    {
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+            $sorty->setLieuNolieu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSorty(Sortie $sorty): self
+    {
+        if ($this->sorties->removeElement($sorty)) {
+            // set the owning side to null (unless already changed)
+            if ($sorty->getLieuNolieu() === $this) {
+                $sorty->setLieuNolieu(null);
+            }
+        }
 
         return $this;
     }

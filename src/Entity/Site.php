@@ -15,16 +15,16 @@ class Site
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $idSite;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
     private $nom;
 
-    public function getIdSite(): ?int
+    public function getId(): ?int
     {
-        return $this->idSite;
+        return $this->id;
     }
 
     public function getNom(): ?string

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ParticipantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -57,21 +59,31 @@ class Participant
      */
     private $actif;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Sortie::class, inversedBy="participants")
+     */
+    private $inscription;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="organisateur", orphanRemoval=true)
+     */
+    private $sorties;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="participants")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $siteNoSite;
+
+    public function __construct()
+    {
+        $this->inscription = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNoParticipant(): ?int
-    {
-        return $this->no_participant;
-    }
-
-    public function setNoParticipant(int $no_participant): self
-    {
-        $this->no_participant = $no_participant;
-
-        return $this;
     }
 
     public function getPseudo(): ?string
@@ -166,6 +178,72 @@ class Participant
     public function setActif(bool $actif): self
     {
         $this->actif = $actif;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sortie>
+     */
+    public function getInscription(): Collection
+    {
+        return $this->inscription;
+    }
+
+    public function addInscription(Sortie $inscription): self
+    {
+        if (!$this->inscription->contains($inscription)) {
+            $this->inscription[] = $inscription;
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Sortie $inscription): self
+    {
+        $this->inscription->removeElement($inscription);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Sortie>
+     */
+    public function getSorties(): Collection
+    {
+        return $this->sorties;
+    }
+
+    public function addSorty(Sortie $sorty): self
+    {
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+            $sorty->setOrganisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSorty(Sortie $sorty): self
+    {
+        if ($this->sorties->removeElement($sorty)) {
+            // set the owning side to null (unless already changed)
+            if ($sorty->getOrganisateur() === $this) {
+                $sorty->setOrganisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSiteNoSite(): ?Site
+    {
+        return $this->siteNoSite;
+    }
+
+    public function setSiteNoSite(?Site $siteNoSite): self
+    {
+        $this->siteNoSite = $siteNoSite;
 
         return $this;
     }

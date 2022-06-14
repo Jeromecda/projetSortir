@@ -35,6 +35,10 @@ class ParticipantController extends AbstractController
             'participant' => $participant,
             'form' => $form,
         ]);
+
+        //$user = $this->getDoctrine()->getRepository(Utilisateur::class)->find($id);
+        // $utilisateur = $this->addParticipant(Participant $participant);
+        // var_dump($utilisateur);
     }
 
     /**

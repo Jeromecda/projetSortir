@@ -16,6 +16,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParticipantController extends AbstractController
 {
     /**
+     * @Route("/{id}/registration", name="app_participant_registration", methods={"GET", "POST"})
+     */
+
+    // Formulaire d'inscription à une sortie pour un utilisateur
+    public function registration(Request $request, Participant $participant, ParticipantRepository $participantRepository): Response
+    {
+        $form = $this->createForm(ParticipantType::class, $participant);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $participantRepository->add($participant, true);
+
+            return $this->redirectToRoute('app_participant_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('participant/sortieRegistration.html.twig', [
+            'participant' => $participant,
+            'form' => $form,
+        ]);
+    }
+
+    /**
      * @Route("/", name="app_participant_index", methods={"GET"})
      */
     public function index(ParticipantRepository $participantRepository): Response

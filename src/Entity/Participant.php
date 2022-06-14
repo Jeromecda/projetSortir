@@ -19,10 +19,7 @@ class Participant
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private $pseudo;
+   
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -38,16 +35,6 @@ class Participant
      * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $telephone;
-
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private $mail;
-
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private $mot_de_passe;
 
     /**
      * @ORM\Column(type="boolean")
@@ -75,6 +62,12 @@ class Participant
      */
     private $siteNoSite;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Utilisateur::class, inversedBy="participant", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $Utilisateur;
+
     public function __construct()
     {
         $this->inscription = new ArrayCollection();
@@ -86,17 +79,7 @@ class Participant
         return $this->id;
     }
 
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo(string $pseudo): self
-    {
-        $this->pseudo = $pseudo;
-
-        return $this;
-    }
+  
 
     public function getNom(): ?string
     {
@@ -134,29 +117,6 @@ class Participant
         return $this;
     }
 
-    public function getMail(): ?string
-    {
-        return $this->mail;
-    }
-
-    public function setMail(string $mail): self
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
-    public function getMotDePasse(): ?string
-    {
-        return $this->mot_de_passe;
-    }
-
-    public function setMotDePasse(string $mot_de_passe): self
-    {
-        $this->mot_de_passe = $mot_de_passe;
-
-        return $this;
-    }
 
     public function isAdministrateur(): ?bool
     {
@@ -244,6 +204,18 @@ class Participant
     public function setSiteNoSite(?Site $siteNoSite): self
     {
         $this->siteNoSite = $siteNoSite;
+
+        return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->Utilisateur;
+    }
+
+    public function setUtilisateur(Utilisateur $Utilisateur): self
+    {
+        $this->Utilisateur = $Utilisateur;
 
         return $this;
     }

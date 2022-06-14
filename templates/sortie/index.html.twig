@@ -28,8 +28,8 @@
                 <td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ sortie.nbinscriptionsmax }}</td>
-                <td>{{ sortie.etatsortie }}</td>
-                <td>{{ sortie.organisateur }}</td>
+                <td>{{ sortie.etatnoetat.libelle }}</td>
+                <td>{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom}}</td>
                 <td>
                     <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">Afficher</a>
                     si on est l'oganisateur

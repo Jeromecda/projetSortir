@@ -6,6 +6,7 @@ use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -50,11 +51,6 @@ class Sortie
     private $descriptioninfos;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $etatsortie;
-
-    /**
      * @ORM\Column(type="string", length=250, nullable=true)
      */
     private $urlPhoto;
@@ -88,9 +84,13 @@ class Sortie
      */
     private $siteOrganisateur;
 
-    public function __construct()
+    public function __construct($user)
     {
         $this->participants = new ArrayCollection();
+        // dd($user);
+        $participant = $user->getParticipant();
+        // dd($participant);
+        $this->setOrganisateur($participant);
     }
 
     public function getId(): ?int
@@ -166,18 +166,6 @@ class Sortie
     public function setDescriptioninfos(?string $descriptioninfos): self
     {
         $this->descriptioninfos = $descriptioninfos;
-
-        return $this;
-    }
-
-    public function getEtatsortie(): ?int
-    {
-        return $this->etatsortie;
-    }
-
-    public function setEtatsortie(?int $etatsortie): self
-    {
-        $this->etatsortie = $etatsortie;
 
         return $this;
     }

@@ -23,7 +23,6 @@ class SortieType extends AbstractType
             ->add('datecloture')
             ->add('nbinscriptionsmax')
             ->add('descriptioninfos')
-            ->add('etatsortie')
             ->add('urlPhoto')
             ->add('etatNoEtat', EntityType::class, 
             ['class'=>Etat::class, 
@@ -32,10 +31,6 @@ class SortieType extends AbstractType
             ['class'=>Lieu::class, 
             'choice_label'=>'nom'])
             ->add('participants', EntityType::class, 
-            ['class'=>Participant::class, 
-            'choice_label'=>'nom',
-            'mapped' => false])
-            ->add('organisateur', EntityType::class, 
             ['class'=>Participant::class, 
             'choice_label'=>'nom',
             'mapped' => false])

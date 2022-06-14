@@ -1,40 +1,40 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
 {% block title %}Sortie index{% endblock %}
 
 {% block body %}
     <h1>Sortie index</h1>
-
+    
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                
                 <th>Nom</th>
                 <th>Datedebut</th>
-                <th>Duree</th>
                 <th>Datecloture</th>
-                <th>Nbinscriptionsmax</th>
-                <th>Descriptioninfos</th>
+                <th>NbPlacesTotal</th>
                 <th>Etatsortie</th>
                 <th>UrlPhoto</th>
+                <th>Inscrit</th>
+                <td>Organisateur</td>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for sortie in sorties %}
             <tr>
-                <td>{{ sortie.id }}</td>
+                
                 <td>{{ sortie.nom }}</td>
                 <td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ sortie.duree }}</td>
                 <td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ sortie.nbinscriptionsmax }}</td>
-                <td>{{ sortie.descriptioninfos }}</td>
                 <td>{{ sortie.etatsortie }}</td>
-                <td>{{ sortie.urlPhoto }}</td>
+                <td>{{ sortie.organisateur }}</td>
                 <td>
-                    <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">show</a>
-                    <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">edit</a>
+                    <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">Afficher</a>
+                    si on est l'oganisateur
+                    <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">modifier</a>
+                    
                 </td>
             </tr>
         {% else %}

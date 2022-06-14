@@ -22,7 +22,10 @@ class ParticipantType extends AbstractType
             ->add('mot_de_passe')
             ->add('administrateur')
             ->add('actif')
-            ->add('inscription')
+            ->add('inscription', EntityType::class, 
+            ['class'=>Site::class, 
+            'choice_label'=>'nom', 
+            'mapped' => false ])
             ->add('siteNoSite', EntityType::class, 
             ['class'=>Site::class, 
             'choice_label'=>'nom'])

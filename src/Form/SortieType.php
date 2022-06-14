@@ -34,10 +34,6 @@ class SortieType extends AbstractType
             ['class'=>Participant::class, 
             'choice_label'=>'nom',
             'mapped' => false])
-            ->add('organisateur', EntityType::class, 
-            ['class'=>Participant::class, 
-            'choice_label'=>'nom',
-            'mapped' => false])
             ->add('siteOrganisateur', EntityType::class, 
             ['class'=>Site::class, 
             'choice_label'=>'nom'])

@@ -6,6 +6,7 @@ use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -83,10 +84,13 @@ class Sortie
      */
     private $siteOrganisateur;
 
-    public function __construct()
+    public function __construct($user)
     {
         $this->participants = new ArrayCollection();
-        $this->organisateur = $this->get('security.token_storage')->getToken()->getUser();
+        // dd($user);
+        $participant = $user->getParticipant();
+        // dd($participant);
+        $this->setOrganisateur($participant);
     }
 
     public function getId(): ?int

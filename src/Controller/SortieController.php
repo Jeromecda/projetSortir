@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
@@ -9,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/sortie")
@@ -28,12 +30,12 @@ class SortieController extends AbstractController
     /**
      * @Route("/new", name="app_sortie_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, SortieRepository $sortieRepository): Response
+    public function new(Request $request, SortieRepository $sortieRepository, Security $security): Response
     {
-        $sortie = new Sortie();
+        $user = $security->getUser();
+        $sortie = new Sortie($user);
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $sortieRepository->add($sortie, true);
 

@@ -24,12 +24,12 @@
         {% for participant in participants %}
             <tr>
                 <td>{{ participant.id }}</td>
-                <td>{{ participant.pseudo }}</td>
+                <td>{{ participant.utilisateur.pseudo }}</td>
                 <td>{{ participant.nom }}</td>
                 <td>{{ participant.prenom }}</td>
                 <td>{{ participant.telephone }}</td>
-                <td>{{ participant.mail }}</td>
-                <td>{{ participant.motDePasse }}</td>
+                <td>{{ participant.utilisateur.email }}</td>
+                <td>{{ participant.utilisateur.password }}</td>
                 <td>{{ participant.administrateur ? 'Yes' : 'No' }}</td>
                 <td>{{ participant.actif ? 'Yes' : 'No' }}</td>
                 <td>

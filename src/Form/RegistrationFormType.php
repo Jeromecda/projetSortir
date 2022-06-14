@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Utilisateur;
+use App\Entity\Participant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -19,7 +20,7 @@ class RegistrationFormType extends AbstractType
     {
         $builder
      
-            // ->add('nom', ParticipantType::class)
+            ->add('participant', ParticipantType::class)
             ->add('email')
             ->add('pseudo')
             ->add('agreeTerms', CheckboxType::class, [

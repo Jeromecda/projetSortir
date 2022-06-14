@@ -6,13 +6,20 @@
     <h1>Register</h1>
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
+    {{ form_row(registrationForm.participant.prenom) }}
+    {{ form_row(registrationForm.participant.nom) }}
+    {{ form_row(registrationForm.pseudo) }}
+    {{ form_row(registrationForm.email) }}
+    {{ form_row(registrationForm.participant.telephone) }}
+    {{ form_row(registrationForm.plainPassword, {
+        label: 'Password'
+    }) }}
+    {{ form_row(registrationForm.participant.inscription) }}
+    {{ form_row(registrationForm.participant.siteNoSite) }}
+    {{ form_row(registrationForm.participant.administrateur) }}
+    {{ form_row(registrationForm.participant.actif) }}
+    {{ form_row(registrationForm.agreeTerms) }}
+    
+        <button type="submit" class="btn button primary">Register</button>
     {{ form_end(registrationForm) }}
 {% endblock %}

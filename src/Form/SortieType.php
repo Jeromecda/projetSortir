@@ -23,7 +23,6 @@ class SortieType extends AbstractType
             ->add('datecloture')
             ->add('nbinscriptionsmax')
             ->add('descriptioninfos')
-            ->add('etatsortie')
             ->add('urlPhoto')
             ->add('etatNoEtat', EntityType::class, 
             ['class'=>Etat::class, 

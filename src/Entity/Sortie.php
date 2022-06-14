@@ -50,11 +50,6 @@ class Sortie
     private $descriptioninfos;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $etatsortie;
-
-    /**
      * @ORM\Column(type="string", length=250, nullable=true)
      */
     private $urlPhoto;
@@ -91,6 +86,7 @@ class Sortie
     public function __construct()
     {
         $this->participants = new ArrayCollection();
+        $this->organisateur = $this->get('security.token_storage')->getToken()->getUser();
     }
 
     public function getId(): ?int
@@ -166,18 +162,6 @@ class Sortie
     public function setDescriptioninfos(?string $descriptioninfos): self
     {
         $this->descriptioninfos = $descriptioninfos;
-
-        return $this;
-    }
-
-    public function getEtatsortie(): ?int
-    {
-        return $this->etatsortie;
-    }
-
-    public function setEtatsortie(?int $etatsortie): self
-    {
-        $this->etatsortie = $etatsortie;
 
         return $this;
     }

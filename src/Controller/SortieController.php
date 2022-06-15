@@ -68,6 +68,8 @@ class SortieController extends AbstractController
     public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository, Security $security): Response
     {
         if ($this->isGranted('ROLE_ADMIN')) {
+            // Ajouter la condition d'être l'organisateur de l'événement
+            // || $this == $sortie->getOrganisateur()
             $form = $this->createForm(SortieType::class, $sortie);
             $form->handleRequest($request);
 

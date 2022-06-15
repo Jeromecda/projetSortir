@@ -1,25 +1,37 @@
-
 <div class="grid-x">
-    <div class="cell large-6">
-        <h2>Sortir.com</h2>
-    </div> 
-    <div class="cell large-6">
-        <ul class="menu">
-            <li><a href="{{ path('app_sortie_index') }}">sorties</a></li>
-            
-            
-            {% if app.user %}          
-            <li><a href="{{ path('app_participant_edit',{'id':app.user.participant.id}) }}">Mon profil</a></li>
-            <li><a href="{{ path('app_logout') }}">deconnexion</a></li>
-            {% else  %}
-            <li><a href="{{ path('app_login') }}">login</a></li>
-            <li><a href="{{ path('app_register') }}">register</a></li>
-            {% endif %}
-            {% if is_granted("ROLE_ADMIN") %}
-            <li><a href="#">villes</a></li>
-            <li><a href="#">sites</a></li>
-            {% endif %}
-        </ul>
-    </div>
-    
-</div>
+	<div class="cell large-6">
+		<h2>Sortir.com</h2>
+	</div>
+	<div class="cell large-6">
+		<ul class="menu">
+			<li>
+				<a href="{{ path('app_sortie_index') }}">sorties</a>
+			</li>
+
+
+			{% if app.user %}
+				<li>
+					<a href="{{ path('app_participant_edit',{'id':app.user.participant.id}) }}">Mon profil</a>
+				</li>
+				<li>
+					<a href="{{ path('app_logout') }}">deconnexion</a>
+				</li>
+			{% else  %}
+				<li>
+					<a href="{{ path('app_login') }}">login</a>
+				</li>
+				<li>
+					<a href="{{ path('app_register') }}">register</a>
+				</li>
+			{% endif %}
+			{% if is_granted("ROLE_ADMIN") %}
+				<li>
+					<a href="#">villes</a>
+				</li>
+				<li>
+					<a href="#">sites</a>
+				</li>
+			{% endif %}
+		</ul>
+		<div>
+	</div>

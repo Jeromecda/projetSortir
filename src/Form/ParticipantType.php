@@ -21,10 +21,10 @@ class ParticipantType extends AbstractType
             ->add('telephone')
             // ->add('mail')
             // ->add('mot_de_passe')
-            ->add('inscription', EntityType::class, 
-            ['class'=>Sortie::class, 
-            'choice_label'=>'nom', 
-            'mapped' => false ])
+            // ->add('inscription', EntityType::class, 
+            // ['class'=>Sortie::class, 
+            // 'choice_label'=>'nom', 
+            // 'mapped' => false ])
             ->add('siteNoSite', EntityType::class, 
             ['class'=>Site::class, 
             'choice_label'=>'nom'])

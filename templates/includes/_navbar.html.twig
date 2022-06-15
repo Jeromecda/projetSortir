@@ -6,9 +6,10 @@
     <div class="cell large-6">
         <ul class="menu">
             <li><a href="{{ path('app_sortie_index') }}">sorties</a></li>
-            {# <li><a href="{{ path('app_participant_edit') }}">Mon profil</a></li> #}
+            
             
             {% if app.user %}          
+            <li><a href="{{ path('app_participant_edit',{'id':app.user.participant.id}) }}">Mon profil</a></li>
             <li><a href="{{ path('app_logout') }}">deconnexion</a></li>
             {% else  %}
             <li><a href="{{ path('app_login') }}">login</a></li>

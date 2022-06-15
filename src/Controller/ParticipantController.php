@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Participant;
 use App\Form\ParticipantType;
 use App\Repository\ParticipantRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/participant")
@@ -42,12 +44,28 @@ class ParticipantController extends AbstractController
     }
 
     /**
+     * @isGranted("ROLE_USER")
      * @Route("/", name="app_participant_index", methods={"GET"})
      */
-    public function index(ParticipantRepository $participantRepository): Response
+    public function index(ParticipantRepository $participantRepository, Security $security): Response
     {
+        if (!$this->isGranted("ROLE_USER")) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        if ($this->isGranted("ROLE_ADMIN")){
+            return $this->render('participant/index.html.twig', [
+                'participants' => $participantRepository->findAll(),
+            ]);
+        }
+        // if($this->isGranted("ROLE_ORGA"))
+        // return $this->render('participant/index.html.twig', [
+        //     'participants' => $participantRepository->findBySortie
+        // ]);
+        // dd($security->getUser()->getParticipant()->getId());
+        $participants[] = $security->getUser()->getParticipant();
         return $this->render('participant/index.html.twig', [
-            'participants' => $participantRepository->findAll(),
+            'participants' => $participants,
         ]);
     }
 
@@ -107,7 +125,7 @@ class ParticipantController extends AbstractController
      */
     public function delete(Request $request, Participant $participant, ParticipantRepository $participantRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$participant->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $participant->getId(), $request->request->get('_token'))) {
             $participantRepository->remove($participant, true);
         }
 

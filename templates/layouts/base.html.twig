@@ -9,18 +9,20 @@
         <link rel="stylesheet" href="{{ asset('css/style.css')}}">
     </head>
     <body>
-        <header>
-
-        </header>
         <div class="grid-container">
-            {% block body %}
-            {% endblock %}
-        </div>
+            <header>
+                {{ include('includes/_navbar.html.twig') }}
+            </header>
+            
+                {% block body %}
+                {% endblock %}
+        
   
         
 
-        {% block javascripts %}
-        <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.4/dist/js/foundation.min.js" crossorigin="anonymous"></script>
-        {% endblock %}
+            {% block javascripts %}
+                <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.4/dist/js/foundation.min.js" crossorigin="anonymous"></script>
+            {% endblock %}
+        </div>
     </body>
 </html>

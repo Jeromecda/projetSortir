@@ -1,5 +1,32 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {# {{ form_widget(form.nom) }} #}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{# {{ form_widget(form) }} #}
+
+<form>
+	<div class="grid-container">
+		<div class="grid-x grid-padding-x">
+			<div class="medium-6 cell">
+				<label>Nom
+					{# <input type="text" placeholder=".medium-6.cell"> #}
+					{{ form_widget(form.nom) }}
+				</label>
+			</div>
+			<div class="medium-6 cell">
+				<label>Input Label
+					{# <input type="date" placeholder=".medium-6.cell"> #}
+                    {{ form_widget(form.datedebut) }}
+				</label>
+			</div>
+		</div>
+	</div>
+</form>
+{{ form_widget(form.duree) }}
+{{ form_widget(form.datecloture) }}
+{{ form_widget(form.nbinscriptionsmax) }}
+{{ form_widget(form.descriptioninfos) }}
+{{ form_widget(form.urlPhoto) }}
+{{ form_widget(form.etatNoEtat) }}
+{{ form_widget(form.lieuNolieu) }}
+{{ form_widget(form.participants) }}
+{{ form_widget(form.siteOrganisateur) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

@@ -61,12 +61,8 @@ class SortieController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_sortie_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository, Security $security): Response
+    public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository): Response
     {
-        // $user = $security->getUser();
-        // $participant = $user->getParticipant();
-        // $this->sortie->addParticipant($participant);
-
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
@@ -80,6 +76,23 @@ class SortieController extends AbstractController
             'sortie' => $sortie,
             'form' => $form,
         ]);
+    }
+    /**
+     * @Route("/{id}/edit-participant", name="app_sortie_edit_participant", methods={"GET", "POST"})
+     */
+    public function editParticipant(Request $request, Sortie $sortie, SortieRepository $sortieRepository, Security $security): Response
+    { 
+            $user = $security->getUser()->getParticipant();
+            // dd($user);
+            $sortie->addParticipant($user);
+            $sortieRepository->add($sortie, true);
+
+            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+    
+
+        // return $this->renderForm('sortie/edit.html.twig', [
+        //     'sortie' => $sortie,
+        // ]);
     }
 
     /**

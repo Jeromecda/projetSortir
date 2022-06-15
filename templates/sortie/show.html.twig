@@ -37,12 +37,14 @@
             </tr>
             <tr>
                 <th>Etatsortie</th>
-                <td>{{ sortie.etatsortie }}</td>
+                <td>{{ sortie.etatnoetat.libelle }}</td>
             </tr>
+            {% if sortie.urlPhoto is defined and sortie.urlPhoto is not null %}
             <tr>
                 <th>UrlPhoto</th>
                 <td>{{ sortie.urlPhoto }}</td>
             </tr>
+            {% endif %}
         </tbody>
     </table>
 

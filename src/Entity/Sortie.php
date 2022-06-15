@@ -91,6 +91,7 @@ class Sortie
         $participant = $user->getParticipant();
         // dd($participant);
         $this->setOrganisateur($participant);
+        // $this->setEtatNoEtat($this->getEtatNoEtat()->getLibelle());
     }
 
     public function getId(): ?int

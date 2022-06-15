@@ -1,49 +1,51 @@
 {% extends 'layouts/base.html.twig' %}
 
-{% block title %}Sortie index{% endblock %}
+{% block title %}Sortie index
+{% endblock %}
 
 {% block body %}
-    <h1>Sortie index</h1>
-    
-    <table class="table">
-        <thead>
-            <tr>
-                
-                <th>Nom</th>
-                <th>Datedebut</th>
-                <th>Datecloture</th>
-                <th>NbPlacesTotal</th>
-                <th>Etatsortie</th>
-                <th>UrlPhoto</th>
-                <th>Inscrit</th>
-                <td>Organisateur</td>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for sortie in sorties %}
-            <tr>
-                
-                <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ sortie.nbinscriptionsmax }}</td>
-                <td>{{ sortie.etatnoetat.libelle }}</td>
-                <td>{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom}}</td>
-                <td>
-                    <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">Afficher</a>
-                    si on est l'oganisateur
-                    <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">modifier</a>
-                    
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<h1>Sortie index</h1>
 
-    <a href="{{ path('app_sortie_new') }}">Create new</a>
+	<table class="table">
+		<thead>
+			<tr>
+
+				<th>Nom</th>
+				<th>Datedebut</th>
+				<th>Datecloture</th>
+				<th>NbPlacesTotal</th>
+				<th>Etatsortie</th>
+				<th>UrlPhoto</th>
+				<th>Inscrit</th>
+				<td>Organisateur</td>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for sortie in sorties %}
+				<tr>
+
+					<td>{{ sortie.nom }}</td>
+					<td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
+					<td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
+					<td>{{ sortie.nbinscriptionsmax }}</td>
+					<td>{{ sortie.etatnoetat.libelle }}</td>
+					<td>{{ sortie.organisateur.prenom }}
+						{{ sortie.organisateur.nom}}</td>
+					<td>
+						<a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">Afficher</a>
+						{% if is_granted("ROLE_ORGA") %}
+							<a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">modifier</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="10">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_sortie_new') }}">Create new</a>
 {% endblock %}

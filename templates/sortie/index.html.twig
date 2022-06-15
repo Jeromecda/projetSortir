@@ -15,8 +15,8 @@
 				<th>Datecloture</th>
 				<th>NbPlacesTotal</th>
 				<th>Etatsortie</th>
-				<th>UrlPhoto</th>
-				<th>Inscrit</th>
+				{# <th>UrlPhoto</th> #}
+				{# <th>Inscrit</th> #}
 				<td>Organisateur</td>
 				<th>actions</th>
 			</tr>
@@ -33,9 +33,13 @@
 					<td>{{ sortie.organisateur.prenom }}
 						{{ sortie.organisateur.nom}}</td>
 					<td>
-						<a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">Afficher</a>
+						<a class="btn button primary" href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
+							<i class="fa-solid fa-eye"></i>
+						</a>
 						{% if is_granted("ROLE_ORGA") %}
-							<a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">modifier</a>
+							<a class="btn button warning" href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">
+								<i class="fa-solid fa-pen"></i>
+							</a>
 						{% endif %}
 					</td>
 				</tr>
@@ -47,5 +51,5 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_sortie_new') }}">Create new</a>
+	<a class="btn button secondary" href="{{ path('app_sortie_new') }}">Create new</a>
 {% endblock %}

@@ -73,6 +73,7 @@ class Participant
         $this->inscription = new ArrayCollection();
         $this->sorties = new ArrayCollection();
         $this->setActif(true);
+        $this->setAdministrateur(false);
     }
 
     public function getId(): ?int

@@ -1,11 +1,10 @@
 {{ form_start(form) }}
- <form>
+ {# <form>
 	{{ form_widget(form) }}
-	<button class="btn button success">{{ button_label|default('Save') }}</button>
-</form>
+	<button class="btn">{{ button_label|default('Save') }}</button>
+</form> 
 
-
-{# 
+#}
 
 		
 		<div class="grid-container">
@@ -42,28 +41,35 @@
 					</label>
 				</div>
 				<div class="medium-6 large-6 cell">
-                    <label>description de la sortie
-						{{ form_widget(form.descriptioninfos) }}
+					<label>url de la photo
+						{{ form_widget(form.urlPhoto) }}
 					</label>
 				</div>
 			</div>
 			
 			<div class="grid-x grid-padding-x">
+				<div class="medium-12 large-12 cell">
+					<label>description de la sortie
+						{{ form_widget(form.descriptioninfos) }}
+					</label>
+				</div>
+			</div>
+			<div class="grid-x grid-padding-x">
 				<div class="medium-6 large-6 cell">
-                    <label>url de la photo
-						{{ form_widget(form.urlPhoto) }}
+                    <label>lieu
+						{{ form_widget(form.lieuNolieu) }}
 					</label>
 				</div>
 				<div class="medium-6 large-6 cell">
-                    <label>etat
-						{{ form_widget(form.etatNoEtat) }}
+                    <label>site organisateur
+						{{ form_widget(form.siteOrganisateur) }}
 					</label>
 				</div>
 			</div>
 		</div>
 		
-		<button class="btn">{{ button_label|default('Save') }}</button> 
-{{ form_end(form) }} #}
+		<button class="btn button primary">{{ button_label|default('Save') }}</button> 
+		{{ form_end(form) }} 
 
 {# {{ form_widget(form.nom) }}
     {{ form_widget(form.datedebut) }}
@@ -72,9 +78,9 @@
 	{{ form_widget(form.nbinscriptionsmax) }}
 	{{ form_widget(form.descriptioninfos) }}
 	{{ form_widget(form.urlPhoto) }}
-
 	{{ form_widget(form.etatNoEtat) }}
 	{{ form_widget(form.lieuNolieu) }}
 	{{ form_widget(form.participants) }}
+
 	{{ form_widget(form.siteOrganisateur) }} #}
 	

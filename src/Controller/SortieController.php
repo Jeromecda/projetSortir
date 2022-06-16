@@ -87,7 +87,7 @@ class SortieController extends AbstractController
             // Si la date du jour est inférieure a la date de cloture un utilisateur peut s'inscrire
             }elseif(new DateTime(date('Y-m-d h:i:s')) < $sortie->getDatecloture()){
                 $user = $security->getUser()->getParticipant();
-                dd($user);
+                // dd($user);
                 $sortie->addParticipant($user);
                 $sortieRepository->add($sortie, true);
                 return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);

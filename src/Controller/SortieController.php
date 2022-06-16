@@ -10,6 +10,7 @@ use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,7 @@ class SortieController extends AbstractController
      * @isGranted("ROLE_USER")
      * @Route("/new", name="app_sortie_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, SortieRepository $sortieRepository, Security $security, EtatRepository $etatRepository): Response
+    public function new(Request $request, SortieRepository $sortieRepository, Security $security, EtatRepository $etatRepository, EntityManagerInterface $em): Response
     {
         $user = $security->getUser();
         $etat = $etatRepository->find(1);
@@ -73,7 +74,7 @@ class SortieController extends AbstractController
      * @isGranted("ROLE_USER")
      * @Route("/{id}/edit", name="app_sortie_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository, Security $security): Response
+    public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository, Security $security, EntityManagerInterface $em): Response
     {
         // Si l'utilisateur est ADMIN ou organisateur de l'evenement il peut editer l evenement
         if ($this->isGranted('ROLE_ADMIN') || ($security->getUser()->getId() == $sortie->getOrganisateur()->getId())) {

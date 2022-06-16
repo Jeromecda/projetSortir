@@ -86,17 +86,20 @@ class SortieController extends AbstractController
                 'form' => $form,
             ]);
             // Si la date du jour est inférieure a la date de cloture un utilisateur peut s'inscrire
-        } elseif (new DateTime(date('Y-m-d h:i:s')) < $sortie->getDatecloture()) {
-            $user = $security->getUser()->getParticipant();
-            dd($user);
-            $sortie->addParticipant($user);
-            $sortieRepository->add($sortie, true);
-            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
-        } else {
-            // dd($security->getUser());
-            dd($sortie->getOrganisateur());
-            // Afficher un message de confirmation d'inscription
-            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+
+            }elseif(new DateTime(date('Y-m-d h:i:s')) < $sortie->getDatecloture()){
+                $user = $security->getUser()->getParticipant();
+                // dd($user);
+                $sortie->addParticipant($user);
+                $sortieRepository->add($sortie, true);
+                return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+    
+            }else {
+                // dd($security->getUser());
+                dd($sortie->getOrganisateur());
+                // Afficher un message de confirmation d'inscription
+                return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
     }
 

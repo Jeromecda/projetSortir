@@ -32,6 +32,7 @@ class SortieController extends AbstractController
     }
 
     /**
+     * @isGranted("ROLE_USER")
      * @Route("/new", name="app_sortie_new", methods={"GET", "POST"})
      */
     public function new(Request $request, SortieRepository $sortieRepository, Security $security, EtatRepository $etatRepository): Response
@@ -70,7 +71,7 @@ class SortieController extends AbstractController
     public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository, Security $security): Response
     {
         // Si l'utilisateur est ADMIN ou organisateur de l'evenement il peut editer l evenement
-        if ($this->isGranted('ROLE_ADMIN') || ($security->getUser()->getId() == $sortie->getOrganisateur()->getId())) {           
+        if ($this->isGranted('ROLE_ADMIN') || ($security->getUser()->getId() == $sortie->getOrganisateur()->getId())) {
             $form = $this->createForm(SortieType::class, $sortie);
             $form->handleRequest($request);
 
@@ -85,30 +86,31 @@ class SortieController extends AbstractController
                 'form' => $form,
             ]);
             // Si la date du jour est inférieure a la date de cloture un utilisateur peut s'inscrire
-            }elseif(new DateTime(date('Y-m-d h:i:s')) < $sortie->getDatecloture()){
-                $user = $security->getUser()->getParticipant();
-                dd($user);
-                $sortie->addParticipant($user);
-                $sortieRepository->add($sortie, true);
-                return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
-    
-            }else {
-                // dd($security->getUser());
-                dd($sortie->getOrganisateur());
-                // Afficher un message de confirmation d'inscription
-                return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
-            }
+        } elseif (new DateTime(date('Y-m-d h:i:s')) < $sortie->getDatecloture()) {
+            $user = $security->getUser()->getParticipant();
+            dd($user);
+            $sortie->addParticipant($user);
+            $sortieRepository->add($sortie, true);
+            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+        } else {
+            // dd($security->getUser());
+            dd($sortie->getOrganisateur());
+            // Afficher un message de confirmation d'inscription
+            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
         }
+    }
 
     /**
+     * isGranted("ROLE_USER")
      * @Route("/{id}", name="app_sortie_delete", methods={"POST"})
      */
-    public function delete(Request $request, Sortie $sortie, SortieRepository $sortieRepository): Response
+    public function delete(Request $request, Sortie $sortie, SortieRepository $sortieRepository, Security $security): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $sortie->getId(), $request->request->get('_token'))) {
-            $sortieRepository->remove($sortie, true);
+        if ($this->isGranted('ROLE_ADMIN') || ($security->getUser()->getId() == $sortie->getOrganisateur()->getId())) {
+            if ($this->isCsrfTokenValid('delete' . $sortie->getId(), $request->request->get('_token'))) {
+                $sortieRepository->remove($sortie, true);
+            }
         }
-
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
     }
 }

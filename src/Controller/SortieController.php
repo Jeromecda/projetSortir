@@ -65,7 +65,7 @@ class SortieController extends AbstractController
         //TODO gérer affichage des participants
         var_dump($participants);
         return $this->render('sortie/show.html.twig', [
-            'sortie' => $sortie, 'participant' => $participants
+            'sortie' => $sortie, 'participants' => $participants
         ]);
     }
 

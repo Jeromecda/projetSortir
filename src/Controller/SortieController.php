@@ -63,7 +63,7 @@ class SortieController extends AbstractController
         //Récupère des éléments par la fonction findBySortie custom DQL
         $participants = $participantRepository->findBySortie($sortie->getId());
         //TODO gérer affichage des participants
-        var_dump($participants);
+        //var_dump($participants);
         return $this->render('sortie/show.html.twig', [
             'sortie' => $sortie, 'participants' => $participants
         ]);

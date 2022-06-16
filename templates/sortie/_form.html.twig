@@ -1,37 +1,79 @@
 {{ form_start(form) }}
-<form>
+ <form>
 	{{ form_widget(form) }}
 	<button class="btn">{{ button_label|default('Save') }}</button>
-</form>
+</form> 
 
-{{ form_end(form) }}
+{# 
 
-{# <form>
+		
 		<div class="grid-container">
 			<div class="grid-x grid-padding-x">
-				<div class="medium-6 cell">
+				<div class="medium-6 large-8 cell">
 					<label>Nom
-						<input type="text" placeholder=".medium-6.cell">
+						{{ form_widget(form.nom) }}
 					</label>
 				</div>
-				<div class="medium-6 cell">
-                    <label>Input Label
-                        <input type="date" placeholder=".medium-6.cell">
+				<div class="medium-6 large-4 cell">
+					<label>durée
+						{{ form_widget(form.duree) }}
+					</label>
+				</div>
+			</div>
+		
+			<div class="grid-x grid-padding-x">
+				<div class="medium-6 large-6 cell">
+                    <label>date de Debut
+						{{ form_widget(form.datedebut) }}
+					</label>
+				</div>
+				<div class="medium-6 large-6 cell">
+                    <label>date de Cloture
+						{{ form_widget(form.datecloture) }}
+					</label>
+				</div>
+			</div>
+			
+			<div class="grid-x grid-padding-x">
+				<div class="medium-6 large-6 cell">
+                    <label>nombre d'inscription maximum
+						{{ form_widget(form.nbinscriptionsmax) }}
+					</label>
+				</div>
+				<div class="medium-6 large-6 cell">
+                    <label>description de la sortie
+						{{ form_widget(form.descriptioninfos) }}
+					</label>
+				</div>
+			</div>
+			
+			<div class="grid-x grid-padding-x">
+				<div class="medium-6 large-6 cell">
+                    <label>url de la photo
+						{{ form_widget(form.urlPhoto) }}
+					</label>
+				</div>
+				<div class="medium-6 large-6 cell">
+                    <label>etat
+						{{ form_widget(form.etatNoEtat) }}
 					</label>
 				</div>
 			</div>
 		</div>
-	</form>
+		
+		<button class="btn">{{ button_label|default('Save') }}</button> 
+{{ form_end(form) }} #}
 
-    {{ form_widget(form.nom) }}
+{# {{ form_widget(form.nom) }}
     {{ form_widget(form.datedebut) }}
 	{{ form_widget(form.duree) }}
 	{{ form_widget(form.datecloture) }}
 	{{ form_widget(form.nbinscriptionsmax) }}
 	{{ form_widget(form.descriptioninfos) }}
 	{{ form_widget(form.urlPhoto) }}
+
 	{{ form_widget(form.etatNoEtat) }}
 	{{ form_widget(form.lieuNolieu) }}
 	{{ form_widget(form.participants) }}
-	{{ form_widget(form.siteOrganisateur) }} 
-	<button class="btn">{{ button_label|default('Save') }}</button> #}
+	{{ form_widget(form.siteOrganisateur) }} #}
+	

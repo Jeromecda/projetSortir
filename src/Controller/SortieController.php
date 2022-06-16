@@ -7,6 +7,7 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
+use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -57,10 +58,14 @@ class SortieController extends AbstractController
     /**
      * @Route("/{id}", name="app_sortie_show", methods={"GET"})
      */
-    public function show(Sortie $sortie): Response
+    public function show(Sortie $sortie, ParticipantRepository $participantRepository): Response
     {
+        //Récupère des éléments par la fonction findBySortie custom DQL
+        $participants = $participantRepository->findBySortie($sortie->getId());
+        //TODO gérer affichage des participants
+        dd($participants);
         return $this->render('sortie/show.html.twig', [
-            'sortie' => $sortie,
+            'sortie' => $sortie, 'participant' => $participants
         ]);
     }
 

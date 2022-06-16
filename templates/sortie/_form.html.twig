@@ -56,8 +56,19 @@
 			</div>
 			<div class="grid-x grid-padding-x">
 				<div class="medium-6 large-6 cell">
-                    <label>lieu
+                    <label id="lieu" name="lieu">lieu
 						{{ form_widget(form.lieuNolieu) }}
+					</label>
+				</div>
+				<div class="medium-6 large-6 cell">
+                    <span id="result" >lieu </span>
+                    <label >lieu
+						{{ sortie.lieuNolieu.nom }}
+						{{ sortie.lieuNolieu.rue }}
+						{{ sortie.lieuNolieu.villeNoVille.nom }}
+						{{ sortie.lieuNolieu.villeNoVille.codePostal }}
+						{{ sortie.lieuNolieu.latitude }}
+						{{ sortie.lieuNolieu.longitude }}
 					</label>
 				</div>
 				<div class="medium-6 large-6 cell">

@@ -6,8 +6,11 @@ use App\Repository\VilleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 /**
+ * isGranted("ROLE_ADMIN")
  * @ORM\Entity(repositoryClass=VilleRepository::class)
  */
 class Ville

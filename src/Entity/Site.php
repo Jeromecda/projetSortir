@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SiteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

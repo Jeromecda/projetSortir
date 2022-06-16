@@ -37,15 +37,15 @@ class SortieType extends AbstractType
             // ->add('etatNoEtat', EntityType::class, 
             // ['class'=>Etat::class, 
             // 'choice_label'=>'libelle'])
-            ->add('lieuNolieu', EntityType::class, 
-            ['class'=>Lieu::class, 
-            'choice_label'=>'nom'])
             // ->add('participants', EntityType::class, 
             // ['class'=>Participant::class, 
             // 'choice_label'=>'nom',
             // 'mapped' => false])
             ->add('siteOrganisateur', EntityType::class, 
             ['class'=>Site::class, 
+            'choice_label'=>'nom'])
+            ->add('lieuNolieu', EntityType::class, 
+            ['class'=>Lieu::class, 
             'choice_label'=>'nom'])
         ;
     }

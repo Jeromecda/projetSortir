@@ -38,7 +38,7 @@ class SortieType extends AbstractType
             ])
             ->add('nbinscriptionsmax')
             ->add('descriptioninfos')
-            ->add('urlPhoto')
+            // ->add('urlPhoto')
             // ->add('etatNoEtat', EntityType::class, 
             // ['class'=>Etat::class, 
             // 'choice_label'=>'libelle'])
@@ -54,27 +54,41 @@ class SortieType extends AbstractType
                     'choice_label' => 'nom'
                 ]
             )
+            // ->add(
+            //     'lieuNolieu',
+            //     EntityType::class,
+            //     [
+            //         'class' => Lieu::class,
+            //         'choice_label' => 'nom'
+            //     ]
+            // )
             ->add(
-                'lieuNolieu',
+                'ville',
                 EntityType::class,
                 [
-                    'class' => Lieu::class,
-                    'choice_label' => 'nom'
+                    'class' => Ville::class,
+                    'choice_label' => 'nom',
+                    'placeholder' => 'Choississez une ville',
+                    'mapped' => false
                 ]
-            )
-            ->add('ville', EntityType::class, 
-            ['class'=>Ville::class, 
-            'choice_label'=>'nom',
-            'placeholder'=>'Choississez une ville',
-            'mapped' => false ])
-        ;
+            );
 
-        // $builder->get("Ville")->addEventListener(
+        $builder->get('ville')->addEventListener(
+            FormEvents::POST_SUBMIT,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+                // $data = $event->getData();            
+                $form->getParent()->add('lieuNolieu', EntityType::class, [
+                    'class' => Lieu::class,
+                    'placeholder' => 'Choississez un lieu',
+                    'choice_label' => 'nom',
+                    'choices' => $form->getData()->getLieus()
+                ]);
+            }
 
+        );
+    }
 
-        // )
-     }
-     
 
     public function configureOptions(OptionsResolver $resolver): void
     {

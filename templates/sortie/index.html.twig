@@ -36,9 +36,11 @@
 						<a class="btn button primary" href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
 							<i class="fa-solid fa-eye"></i>
 						</a>
+						{% if is_granted("ROLE_USER") %}
 							<a class="btn button warning" href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">
 								<i class="fa-solid fa-pen"></i>
 							</a>
+						{% endif %}
 					</td>
 				</tr>
 			{% else %}

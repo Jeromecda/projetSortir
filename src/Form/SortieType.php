@@ -34,9 +34,9 @@ class SortieType extends AbstractType
             ->add('nbinscriptionsmax')
             ->add('descriptioninfos')
             ->add('urlPhoto')
-            ->add('etatNoEtat', EntityType::class, 
-            ['class'=>Etat::class, 
-            'choice_label'=>'libelle'])
+            // ->add('etatNoEtat', EntityType::class, 
+            // ['class'=>Etat::class, 
+            // 'choice_label'=>'libelle'])
             ->add('lieuNolieu', EntityType::class, 
             ['class'=>Lieu::class, 
             'choice_label'=>'nom'])

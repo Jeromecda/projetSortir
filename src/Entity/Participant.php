@@ -72,6 +72,7 @@ class Participant
     {
         $this->inscription = new ArrayCollection();
         $this->sorties = new ArrayCollection();
+        $this->setActif(true);
     }
 
     public function getId(): ?int

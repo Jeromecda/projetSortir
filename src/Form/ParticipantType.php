@@ -28,8 +28,8 @@ class ParticipantType extends AbstractType
             ->add('siteNoSite', EntityType::class, 
             ['class'=>Site::class, 
             'choice_label'=>'nom'])
-            ->add('administrateur')
-            ->add('actif')
+            // ->add('administrateur')
+            // ->add('actif')
         ;
     }
 

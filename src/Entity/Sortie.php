@@ -84,13 +84,15 @@ class Sortie
      */
     private $siteOrganisateur;
 
-    public function __construct($user)
+    public function __construct($user, Etat $etat)
     {
         $this->participants = new ArrayCollection();
         // dd($user);
         $participant = $user->getParticipant();
         // dd($participant);
         $this->setOrganisateur($participant);
+        $this->setEtatNoEtat($etat);
+        
         // $this->setEtatNoEtat($this->getEtatNoEtat()->getLibelle());
     }
 

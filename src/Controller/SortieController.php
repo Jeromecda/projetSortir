@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Form\SortieType;
+use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,10 +34,11 @@ class SortieController extends AbstractController
     /**
      * @Route("/new", name="app_sortie_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, SortieRepository $sortieRepository, Security $security): Response
+    public function new(Request $request, SortieRepository $sortieRepository, Security $security, EtatRepository $etatRepository): Response
     {
         $user = $security->getUser();
-        $sortie = new Sortie($user);
+        $etat = $etatRepository->find(1);
+        $sortie = new Sortie($user, $etat);
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -60,11 +64,13 @@ class SortieController extends AbstractController
     }
 
     /**
+     * @isGranted("ROLE_USER")
      * @Route("/{id}/edit", name="app_sortie_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Sortie $sortie, SortieRepository $sortieRepository, Security $security): Response
     {
-        if ($this->isGranted('ROLE_ADMIN')) {
+        // Si l'utilisateur est ADMIN ou organisateur de l'evenement il peut editer l evenement
+        if ($this->isGranted('ROLE_ADMIN') || ($security->getUser()->getId() == $sortie->getOrganisateur()->getId())) {           
             $form = $this->createForm(SortieType::class, $sortie);
             $form->handleRequest($request);
 
@@ -78,13 +84,21 @@ class SortieController extends AbstractController
                 'sortie' => $sortie,
                 'form' => $form,
             ]);
+            // Si la date du jour est inférieure a la date de cloture un utilisateur peut s'inscrire
+            }elseif(new DateTime(date('Y-m-d h:i:s')) < $sortie->getDatecloture()){
+                $user = $security->getUser()->getParticipant();
+                dd($user);
+                $sortie->addParticipant($user);
+                $sortieRepository->add($sortie, true);
+                return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+    
+            }else {
+                // dd($security->getUser());
+                dd($sortie->getOrganisateur());
+                // Afficher un message de confirmation d'inscription
+                return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
-        $user = $security->getUser()->getParticipant();
-        $sortie->addParticipant($user);
-        $sortieRepository->add($sortie, true);
-        //Afficher un message de confirmation d'inscription
-        return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
-    }
 
     /**
      * @Route("/{id}", name="app_sortie_delete", methods={"POST"})

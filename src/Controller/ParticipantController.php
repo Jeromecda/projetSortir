@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
 /**
- * @isGranted("ROLE_ADMIN")
+ * @isGranted("ROLE_USER")
  * @Route("/participant")
  */
 class ParticipantController extends AbstractController

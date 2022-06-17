@@ -31,9 +31,17 @@ class SortieController extends AbstractController
             'sorties' => $sortieRepository->findAll(),
         ]);
     }
+    // public function index(SortieRepository $sortieRepository, Security $security): Response
+    // {
+    //     $id = $security->getUser()->getId();
+    //     var_dump($user);
+    //     return $this->render('sortie/index.html.twig', [
+    //         'sorties' => $sortieRepository->findById($id),
+    //     ]);
+    // }
 
     /**
-     * @isGranted("ROLE_USER")
+     * @isGranted("ROLE_USER
      * @Route("/new", name="app_sortie_new", methods={"GET", "POST"})
      */
     public function new(Request $request, SortieRepository $sortieRepository, Security $security, EtatRepository $etatRepository): Response
@@ -63,9 +71,9 @@ class SortieController extends AbstractController
         //Récupère des éléments par la fonction findBySortie custom DQL
         $participants = $participantRepository->findBySortie($sortie->getId());
         //TODO gérer affichage des participants
-        dd($participants);
+        //var_dump($participants);
         return $this->render('sortie/show.html.twig', [
-            'sortie' => $sortie, 'participant' => $participants
+            'sortie' => $sortie, 'participants' => $participants
         ]);
     }
 

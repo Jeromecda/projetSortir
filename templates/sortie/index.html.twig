@@ -8,7 +8,12 @@
 	<div class="cell grid-y grid-margin-y">
 		<form action="{{ path('app_sortie_index') }}" method="get">
 			<div class="cell">
-				<input type="checkbox" name="checkbox_orga" id="checkbox_orga"><label>Les sorties que j'organise</label>
+				<div class="cell">
+					<input type="checkbox" name="checkbox_orga" id="checkbox_orga"><label>Les sorties que j'organise</label>
+				</div>
+				<div class="cell">
+					<input type="checkbox" name="checkbox_passees" id="checkbox_passees"><label>Les sorties passées</label>
+				</div>
 			</div>
 			<div class="cell">
 				<button class="btn button secondary ">filtrer</button>

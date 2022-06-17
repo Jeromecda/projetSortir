@@ -23,26 +23,35 @@ use Symfony\Component\Security\Core\Security;
  */
 class SortieController extends AbstractController
 {
-    /**
+   /**
      * @Route("/", name="app_sortie_index", methods={"GET"})
      */
-    public function index(SortieRepository $sortieRepository): Response
-    {
-        return $this->render('sortie/index.html.twig', [
-            'sorties' => $sortieRepository->findAll(),
-        ]);
-    }
-    // public function index(SortieRepository $sortieRepository, Security $security): Response
+    // public function index(SortieRepository $sortieRepository, Security): Response
     // {
-    //     $id = $security->getUser()->getId();
-    //     var_dump($user);
     //     return $this->render('sortie/index.html.twig', [
-    //         'sorties' => $sortieRepository->findById($id),
+    //         'sorties' => $sortieRepository->findAll(),
     //     ]);
-    // }
 
-    /**
-     * @isGranted("ROLE_USER
+    // }
+    public function index(SortieRepository $sortieRepository, Security $security): Response
+    {
+        if(isset($_REQUEST['checkbox_orga'])){
+            $id = $security->getUser()->getParticipant()->getId();
+            var_dump($id);
+            return $this->render('sortie/index.html.twig', [
+                'sorties' => $sortieRepository->findByOrganisateur($id),
+            ]);
+
+        }
+            return $this->render('sortie/index.html.twig', [
+                'sorties' => $sortieRepository->findAll(),
+
+            ]);
+       
+    }
+    
+    /**  
+     * @isGranted("ROLE_USER")
      * @Route("/new", name="app_sortie_new", methods={"GET", "POST"})
      */
     public function new(Request $request, SortieRepository $sortieRepository, Security $security, EtatRepository $etatRepository, EntityManagerInterface $em): Response

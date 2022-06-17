@@ -42,7 +42,7 @@ class SortieRepository extends ServiceEntityRepository
 
     
  
-    // public function findById($id)
+    // public function findByOrganisateur($id)
     // {
     //     $entityManager = $this->getEntityManager();
 
@@ -58,7 +58,7 @@ class SortieRepository extends ServiceEntityRepository
     //         "SELECT s.nom 
     //         FROM App\Entity\Sortie s
     //         -- INNER JOIN s.organisateur o
-    //         WHERE s.organisateur_id = $id"
+    //         WHERE s.organisateur = $id"
     //         );
     //     return $query->getResult();
         

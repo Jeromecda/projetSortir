@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @isGranted("ROLE_ADMIN")
+ * @isGranted("ROLE_USER")
  * @Route("/lieu")
  */
 class LieuController extends AbstractController
@@ -28,6 +28,7 @@ class LieuController extends AbstractController
     }
 
     /**
+     * @isGranted("ROLE_USER")
      * @Route("/new", name="app_lieu_new", methods={"GET", "POST"})
      */
     public function new(Request $request, LieuRepository $lieuRepository): Response
@@ -59,6 +60,7 @@ class LieuController extends AbstractController
     }
 
     /**
+     * @isGranted("ROLE_ADMIN")
      * @Route("/{id}/edit", name="app_lieu_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Lieu $lieu, LieuRepository $lieuRepository): Response

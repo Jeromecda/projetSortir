@@ -1,97 +1,115 @@
 {% extends 'layouts/base.html.twig' %}
 
-{% block title %}New Sortie{% endblock %}
+{% block title %}New Sortie
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Sortie</h1>
+	<h1>Create new Sortie</h1>
 
-    {{ form_start(form) }}
-    {# <form>
-       {{ form_widget(form) }}
-       <button class="btn button success">{{ button_label|default('Save') }}</button>
-   </form>
-   
-   #}
-   
-           
-           <div class="grid-container">
-               <div class="grid-x grid-padding-x">
-                   <div class="medium-6 large-8 cell">
-                       <label>Nom
-                           {{ form_widget(form.nom) }}
-                       </label>
-                   </div>
-                   <div class="medium-6 large-4 cell">
-                       <label>durée
-                           {{ form_widget(form.duree) }}
-                       </label>
-                   </div>
-               </div>
-           
-               <div class="grid-x grid-padding-x">
-                   <div class="medium-6 large-6 cell">
-                       <label>date de Debut
-                           {{ form_widget(form.datedebut) }}
-                       </label>
-                   </div>
-                   <div class="medium-6 large-6 cell">
-                       <label>date de Cloture
-                           {{ form_widget(form.datecloture) }}
-                       </label>
-                   </div>
-               </div>
-               
-               <div class="grid-x grid-padding-x">
-                   <div class="medium-6 large-6 cell">
-                       <label>nombre d'inscription maximum
-                           {{ form_widget(form.nbinscriptionsmax) }}
-                       </label>
-                   </div>
-                   <div class="medium-6 large-6 cell">
-                       <label>url de la photo
-                           {{ form_widget(form.urlPhoto) }}
-                       </label>
-                   </div>
-               </div>
-               
-               <div class="grid-x grid-padding-x">
-                   <div class="medium-12 large-12 cell">
-                       <label>description de la sortie
-                           {{ form_widget(form.descriptioninfos) }}
-                       </label>
-                   </div>
-               </div>
-               <div class="grid-x grid-padding-x">
-                   <div class="medium-6 large-6 cell">
-                       <label>lieu
-                           {{ form_widget(form.lieuNolieu) }}
-                       </label>
-                   </div>
-                   <div class="medium-6 large-6 cell">
-                       <label>site organisateur
-                           {{ form_widget(form.siteOrganisateur) }}
-                       </label>
-                   </div>
-               </div>
-           </div>
-           
-           <button class="btn button primary">{{ button_label|default('Save') }}</button> 
-           {{ form_end(form) }} 
-   
-   {# {{ form_widget(form.nom) }}
-       {{ form_widget(form.datedebut) }}
-       {{ form_widget(form.duree) }}
-       {{ form_widget(form.datecloture) }}
-       {{ form_widget(form.nbinscriptionsmax) }}
-       {{ form_widget(form.descriptioninfos) }}
-       {{ form_widget(form.urlPhoto) }}
-       {{ form_widget(form.etatNoEtat) }}
-       {{ form_widget(form.lieuNolieu) }}
-       {{ form_widget(form.participants) }}
-   
-       {{ form_widget(form.siteOrganisateur) }} #}
-       
-       
+	{{ form_start(form) }}
+	{# <form>
+		       {{ form_widget(form) }}
+		       <button class="btn button success">{{ button_label|default('Save') }}</button>
+		   </form>
+		   
+		   #}
 
-    <a class="btn button warning" href="{{ path('app_sortie_index') }}">back to list</a>
+
+	<div class="grid-container">
+		<div class="grid-x grid-padding-x">
+			<div class="medium-6 large-6 cell">
+				<label>Nom
+					{{ form_widget(form.nom) }}
+				</label>
+			</div>
+			<div class="medium-6 large-6 cell">
+				<label>Ville organisatrice
+					{{ form_widget(form.siteOrganisateur) }}
+				</label>
+			</div>
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="medium-6 large-6 cell">
+				<label>date de Debut
+					{{ form_widget(form.datedebut) }}
+				</label>
+			</div>
+			<div class="medium-6 large-6 cell">
+				<label>Ville
+					{{ form_widget(form.ville) }}
+				</label>
+			</div>
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="medium-6 large-6 cell">
+				<label>date de Cloture
+					{{ form_widget(form.datecloture) }}
+				</label>
+			</div>
+			<div class="medium-6 large-6 cell">
+				<label>lieu
+					{# {{ form_widget(form.lieuNolieu) }} #}
+				</label>
+			</div>
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="medium-6 large-6 cell">
+				<label>nombre d'inscription maximum
+					{{ form_widget(form.nbinscriptionsmax) }}
+				</label>
+			</div>
+		</div>
+		<div class="grid-x grid-padding-x">
+			<div class="medium-6 large-6 cell">
+				<label>durée
+					{{ form_widget(form.duree) }}
+				</label>
+			</div>
+			{# <div class="medium-6 large-6 cell">
+				<label>url de la photo
+					{{ form_widget(form.urlPhoto) }}
+				</label>
+			</div> #}
+			<div class="medium-6 large-6 cell">
+				<label>description de la sortie
+					{{ form_widget(form.descriptioninfos) }}
+				</label>
+			</div>
+            {# {% if lieu is defined and lieu is not null %}
+			<div class="medium-6 large-6 cell">
+				<label>Détails du lieu
+					{{ sortie.lieuNolieu.nom }}
+					{{ sortie.lieuNolieu.rue }}
+					{{ sortie.lieuNolieu.villeNoVille.nom }}
+					{{ sortie.lieuNolieu.villeNoVille.codePostal }}
+					{{ sortie.lieuNolieu.latitude }}
+					{{ sortie.lieuNolieu.longitude }}
+				</label>
+			</div>
+            {% endif %} #}
+		</div>
+	</div>
+
+	<button class="btn button primary">{{ button_label|default('Save') }}</button>
+	{{ form_end(form) }}
+
+	{# {{ form_widget(form.nom) }}
+		       {{ form_widget(form.datedebut) }}
+		       {{ form_widget(form.duree) }}
+		       {{ form_widget(form.datecloture) }}
+		       {{ form_widget(form.nbinscriptionsmax) }}
+		       {{ form_widget(form.descriptioninfos) }}
+		       {{ form_widget(form.urlPhoto) }}
+		       {{ form_widget(form.etatNoEtat) }}
+		       {{ form_widget(form.lieuNolieu) }}
+		       {{ form_widget(form.participants) }}
+		   
+		       {{ form_widget(form.siteOrganisateur) }} #}
+
+
+	<a class="btn button warning" href="{{ path('app_sortie_index') }}">back to list</a>
+
 {% endblock %}

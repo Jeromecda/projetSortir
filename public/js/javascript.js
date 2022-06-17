@@ -1,19 +1,27 @@
 var $sortie_ville = $("#sortie_ville")
-var $token = $("#post_token")
+var $token = $("#sortie_token")
 
-$sortie_ville.change(function () {
+$sortie_ville.change(
+
+function () {
     var $form = $(this).closest('form')
     var data = {}
+    console.log('test')
 
-    data($token.attr('name')) = $token.val()
-    data($sortie_ville.attr('name')) = $sortie_ville.val()
+    data[$token.attr('name')] = $token.val()
+    data[$sortie_ville.attr('name')] = $sortie_ville.val()
+    console.log(data)
+    console.log($sortie_ville)
 
-    $.post($form.attr('action'), data).then(function (response) {
-        $('sortie_lieuNolieu').replaceWith(
-            $(response).find($sortie_lieuNolieu)
-        )
+    $.post($form.attr('action'), data).then(function (response) 
+    {
+        $("#sortie_lieuNolieu").replaceWith(
+            $(response).find("#sortie_lieuNolieu")
+            )
+            console.log('mise a jour des sorties')
     })
 })
+
 
 function log($msg) {
     console.log($msg)

@@ -5,16 +5,16 @@
 
 {% block body %}
 	<h1>Sortie index</h1>
-	{# <div class="cell grid-y grid-margin-y">
-		<form action="#" method="get">
+	<div class="cell grid-y grid-margin-y">
+		<form action="{{ path('app_sortie_index') }}" method="get">
 			<div class="cell">
-				<input type="text" name="textTest"><label>Les sorties que j'organise</label>
+				<input type="checkbox" name="orga" id="orga"><label>Les sorties que j'organise</label>
 			</div>
 			<div class="cell">
 				<button class="btn button secondary ">filtrer</button>
 			</div>
 		</form>
-	</div> #}
+	</div>
 	<div class="grid-x grid-margin-x">
 		<div class="cell">
 			<table class="table">

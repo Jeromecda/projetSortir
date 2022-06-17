@@ -26,23 +26,66 @@ class SortieController extends AbstractController
     /**
      * @Route("/", name="app_sortie_index", methods={"GET"})
      */
-    public function index(SortieRepository $sortieRepository): Response
-    {
-        return $this->render('sortie/index.html.twig', [
-            'sorties' => $sortieRepository->findAll(),
-        ]);
-    }
+    // public function index(SortieRepository $sortieRepository, Security): Response
+    // {
+    //     return $this->render('sortie/index.html.twig', [
+    //         'sorties' => $sortieRepository->findAll(),
+    //     ]);
+
+    // }
     // public function index(SortieRepository $sortieRepository, Security $security): Response
     // {
-    //     $id = $security->getUser()->getId();
-    //     var_dump($user);
-    //     return $this->render('sortie/index.html.twig', [
-    //         'sorties' => $sortieRepository->findById($id),
-    //     ]);
+    //     if(isset($_REQUEST['checkbox_orga'])){
+
+    //         $id = $security->getUser()->getParticipant()->getId();
+    //         var_dump($id);
+    //         return $this->render('sortie/index.html.twig', [
+    //             'sorties' => $sortieRepository->findByOrganisateur($id),
+    //         ]);
+
+    //     }
+    //         return $this->render('sortie/index.html.twig', [
+    //             'sorties' => $sortieRepository->findAll(),
+
+    //         ]);
+
     // }
 
-    /**
-     * @isGranted("ROLE_USER
+    public function index(SortieRepository $sortieRepository, Security $security): Response
+    {
+        if (isset($_REQUEST['checkbox_orga'])) {
+            $id = $security->getUser()->getParticipant()->getId();
+            //var_dump($id);
+            return $this->render('sortie/index.html.twig', [
+                'sorties' => $sortieRepository->findByOrganisateur($id),
+            ]);
+        }
+        if (isset($_REQUEST['checkbox_passees'])) {
+
+            $sorties = $sortieRepository->findAll();
+            // dd($sorties);
+            $sorties_passees = array();
+            foreach ($sorties as $sortie) {
+                if (new DateTime(date('Y-m-d h:i:s')) > $sortie->getDatecloture()) {
+                    array_push($sorties_passees, $sortie);
+                }
+            }
+
+            return $this->render('sortie/index.html.twig', [
+                'sorties' => $sorties_passees,
+            ]);
+        }
+
+        return $this->render('sortie/index.html.twig', [
+            'sorties' => $sortieRepository->findAll(),
+
+        ]);
+    }
+
+
+
+    /**  
+     * @isGranted("ROLE_USER")
      * @Route("/new", name="app_sortie_new", methods={"GET", "POST"})
      */
     public function new(Request $request, SortieRepository $sortieRepository, Security $security, EtatRepository $etatRepository, EntityManagerInterface $em): Response
@@ -101,22 +144,21 @@ class SortieController extends AbstractController
             ]);
             // Si la date du jour est inférieure a la date de cloture un utilisateur peut s'inscrire
 
-            }elseif(new DateTime(date('Y-m-d h:i:s')) < $sortie->getDatecloture()){
-                $user = $security->getUser()->getParticipant();
-                // dd($user);
-                $sortie->addParticipant($user);
-                $sortieRepository->add($sortie, true);
-                return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
-    
-            }else {
-                // dd($security->getUser());
-                dd($sortie->getOrganisateur());
-                // Afficher un message de confirmation d'inscription
-                return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
-            }
+        } elseif (new DateTime(date('Y-m-d h:i:s')) < $sortie->getDatecloture()) {
+            $user = $security->getUser()->getParticipant();
+            // dd($user);
+            $sortie->addParticipant($user);
+            $sortieRepository->add($sortie, true);
+            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+        } else {
+            // dd($security->getUser());
+            dd($sortie->getOrganisateur());
+            // Afficher un message de confirmation d'inscription
+            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
         }
-    
-    
+    }
+
+
 
     /**
      * isGranted("ROLE_USER")

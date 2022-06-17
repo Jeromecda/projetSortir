@@ -40,30 +40,6 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
-    
- 
-    // public function findById($id)
-    // {
-    //     $entityManager = $this->getEntityManager();
-
-    //         $query = $entityManager->createQuery(
-    //         "SELECT s.nom, s.datedebut, s.datecloture, s.nbinscriptionsmax, s.organisateur 
-    //         FROM App\Entity\Sortie s
-    //         INNER JOIN s.inscription i
-    //         INNER JOIN i.Utilisateur u
-    //         WHERE s.id = $id"
-    //         );
-
-    //         $query = $entityManager->createQuery(
-    //         "SELECT s.nom 
-    //         FROM App\Entity\Sortie s
-    //         -- INNER JOIN s.organisateur o
-    //         WHERE s.organisateur_id = $id"
-    //         );
-    //     return $query->getResult();
-        
-    // }
-
 //    /**
 //     * @return Sortie[] Returns an array of Sortie objects
 //     */

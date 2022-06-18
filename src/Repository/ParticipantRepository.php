@@ -43,14 +43,37 @@ class ParticipantRepository extends ServiceEntityRepository
     public function findBySortie($id)
     {
         $entityManager = $this->getEntityManager();
-
-            $query = $entityManager->createQuery(
-            "SELECT u.pseudo, p.nom, p.prenom 
+        // $query = $entityManager->createQuery(
+        //     "SELECT u.pseudo, p.nom, p.prenom 
+        //     FROM App\Entity\Participant p
+        //     INNER JOIN p.inscription s
+        //     INNER JOIN p.Utilisateur u
+        //     WHERE s.id = $id"
+        //     );
+        
+        $query = $entityManager->createQuery(
+            "SELECT u.pseudo, p.nom, p.prenom, p.id 
             FROM App\Entity\Participant p
             INNER JOIN p.inscription s
             INNER JOIN p.Utilisateur u
             WHERE s.id = $id"
             );
+
+        return $query->getResult();
+        
+    }
+
+    public function findBySortieComplete($sortie)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            "SELECT u.pseudo, p.nom, p.prenom 
+            FROM App\Entity\Participant p
+            INNER JOIN p.inscription s
+            INNER JOIN p.Utilisateur u
+            WHERE s.id = $sortie.id"
+            );
+
         return $query->getResult();
         
     }

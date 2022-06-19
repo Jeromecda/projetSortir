@@ -97,12 +97,35 @@ class SortieController extends AbstractController
             foreach ($sorties as $sortie) {
                 $participants = $participantRepository->findBySortie($sortie->getId());
                foreach($participants as $participant){
-                //foreach vérifiée
-                // dd($participant['id'])   ;
                 if ($participant['id'] == $id) {
                        array_push($sorties_inscription, $sortie);
                    }
                }
+            }
+
+            return $this->render('sortie/index.html.twig', [
+                'sorties' => $sorties_inscription,
+            ]);
+        }
+        //non inscris
+        if (isset($_REQUEST['checkbox_non_inscris'])) {
+            $id = $security->getUser()->getParticipant()->getId();
+            $sorties = $sortieRepository->findAll();
+            $sorties_inscription = array();
+            foreach ($sorties as $sortie) {
+                //flag pour ignorer les sorties quand inscrit
+                $flag = false;
+                $participants = $participantRepository->findBySortie($sortie->getId());
+               foreach($participants as $participant){
+                    if ($participant['id'] == $id) {
+                        $flag = true;
+                        break;
+                    } 
+                }
+                if ($flag == true){
+                    continue;
+                }
+                array_push($sorties_inscription, $sortie);
             }
 
             return $this->render('sortie/index.html.twig', [

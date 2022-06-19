@@ -80,7 +80,7 @@ class SortieController extends AbstractController
             
             $sorties_passees = array();
             foreach ($sorties as $sortie) {
-                if (new DateTime(date('Y-m-d h:i:s')) > $sortie->getDatecloture()) {
+                if (new DateTime(date('Y-m-d h:i:s')) > $sortie->getDatedebut()) {
                     array_push($sorties_passees, $sortie);
                 }
             }

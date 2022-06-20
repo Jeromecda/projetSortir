@@ -5,23 +5,31 @@
 
 {% block body %}
 	<h1>Sortie index</h1>
-	<div class="cell grid-y grid-margin-y">
+	<div class="cell grid-x grid-margin-x">
 		<form action="{{ path('app_sortie_index') }}" method="get">
-			<div class="cell">
-				<div class="cell">
-					<input type="checkbox" name="checkbox_orga" id="checkbox_orga"><label>Les sorties que j'organise</label>
-				</div>
-				<div class="cell">
-					<input type="checkbox" name="checkbox_inscris" id="checkbox_inscris"><label>les sorties auquelles je suis inscris</label>
-				</div>
-				<div class="cell">
-					<input type="checkbox" name="checkbox_non_inscris" id="checkbox_non_inscris"><label>les sorties auquelles je ne suis pas inscris</label>
-				</div>
-				<div class="cell">
-					<input type="checkbox" name="checkbox_passees" id="checkbox_passees"><label>Les sorties passées</label>
-				</div>
+			<div class="cell grid-x">
+				
+				<label >Entre </label>
+				<input type="date" name="date_dateDebut" id="date_dateDebut">
+				
 			</div>
 			<div class="cell">
+				<div class="cell grid-x">
+					<div class="cell">
+						<input type="checkbox" name="checkbox_orga" id="checkbox_orga"><label>Les sorties que j'organise</label>
+					</div>
+					<div class="cell">
+						<input type="checkbox" name="checkbox_inscris" id="checkbox_inscris"><label>les sorties auquelles je suis inscris</label>
+					</div>
+					<div class="cell">
+						<input type="checkbox" name="checkbox_non_inscris" id="checkbox_non_inscris"><label>les sorties auquelles je ne suis pas inscris</label>
+					</div>
+					<div class="cell">
+						<input type="checkbox" name="checkbox_passees" id="checkbox_passees"><label>Les sorties passées</label>
+					</div>
+				</div>
+			</div>
+			<div class="cell grid-x">
 				<button class="btn button secondary ">filtrer</button>
 			</div>
 		</form>

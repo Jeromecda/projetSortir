@@ -8,6 +8,7 @@ use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
+use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,79 +39,7 @@ class SortieController extends AbstractController
     // }
         public function index(SortieRepository $sortieRepository, Security $security, ParticipantRepository $participantRepository): Response
         {
-        // if (isset($_REQUEST['checkbox_orga'])) {
-        //     $id = $security->getUser()->getParticipant()->getId();
-        //     //var_dump($id);
-        //     return $this->render('sortie/index.html.twig', [
-        //         'sorties' => $sortieRepository->findByOrganisateur($id),
-        //     ]);
-        // }
-        // if (isset($_REQUEST['checkbox_passees'])) {
-
-        //     $sorties = $sortieRepository->findAll();
-            
-        //     $sorties_passees = array();
-        //     foreach ($sorties as $sortie) {
-        //         if (new DateTime(date('Y-m-d h:i:s')) > $sortie->getDatedebut()) {
-        //             array_push($sorties_passees, $sortie);
-        //         }
-        //     }
-        //         //dd($sorties_passees);
-        //     return $this->render('sortie/index.html.twig', [
-        //         'sorties' => $sorties_passees,
-        //     ]);
-        // }
-        // //sorites ou je suis inscris
-        // if (isset($_REQUEST['checkbox_inscris'])) {
-        //     $id = $security->getUser()->getParticipant()->getId();
-        //     $sorties = $sortieRepository->findAll();
-        //     $sorties_inscription = array();
-        //     foreach ($sorties as $sortie) {
-        //         $participants = $participantRepository->findBySortie($sortie->getId());
-        //        foreach($participants as $participant){
-        //         if ($participant['id'] == $id) {
-        //                array_push($sorties_inscription, $sortie);
-        //            }
-        //        }
-        //     }
-
-        //     return $this->render('sortie/index.html.twig', [
-        //         'sorties' => $sorties_inscription,
-        //     ]);
-        // }
-        // //non inscris
-        // if (isset($_REQUEST['checkbox_non_inscris'])) {
-        //     $id = $security->getUser()->getParticipant()->getId();
-        //     $sorties = $sortieRepository->findAll();
-        //     $sorties_inscription = array();
-        //     foreach ($sorties as $sortie) {
-        //         //flag pour ignorer les sorties quand inscrit
-        //         $flag = false;
-        //         $participants = $participantRepository->findBySortie($sortie->getId());
-        //        foreach($participants as $participant){
-        //             if ($participant['id'] == $id) {
-        //                 $flag = true;
-        //                 break;
-        //             } 
-        //         }
-        //         if ($flag == true){
-        //             continue;
-        //         }
-        //         array_push($sorties_inscription, $sortie);
-        //     }
-
-        //     return $this->render('sortie/index.html.twig', [
-        //         'sorties' => $sorties_inscription,
-        //     ]);
-        // }
-
-
-        // //return liste complète des sorties
-        // return $this->render('sortie/index.html.twig', [
-        //     'sorties' => $sortieRepository->findAll(),
-
-        // ]);
-        if (isset($_REQUEST['checkbox_orga'])) {
+            if (isset($_REQUEST['checkbox_orga'])) {
             $id = $security->getUser()->getParticipant()->getId();
             //var_dump($id);
             return $this->render('sortie/index.html.twig', [
@@ -193,14 +122,116 @@ class SortieController extends AbstractController
                 'sorties' => $sorties_dateBetween,
             ]);   
         }
-
-
-        //return liste complète des sorties
-        return $this->render('sortie/index.html.twig', [
+         //return liste complète des sorties
+         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortieRepository->findAll(),
+
 
         ]);
     }
+    //     public function index(SortieRepository $sortieRepository, Security $security, ParticipantRepository $participantRepository, SiteRepository $siteRepository): Response
+    //     {
+    //     if (isset($_REQUEST['checkbox_orga'])) {
+    //         $id = $security->getUser()->getParticipant()->getId();
+    //         //var_dump($id);
+    //         return $this->render('sortie/index.html.twig', [
+    //             'sorties' => $sortieRepository->findByOrganisateur($id),
+    //         ]);
+    //     }
+    //     if (isset($_REQUEST['checkbox_passees'])) {
+
+    //         $sorties = $sortieRepository->findAll();
+            
+    //         $sorties_passees = array();
+    //         foreach ($sorties as $sortie) {
+    //             if (new DateTime(date('Y-m-d h:i:s')) > $sortie->getDatedebut()) {
+    //                 array_push($sorties_passees, $sortie);
+    //             }
+    //         }
+    //             //dd($sorties_passees);
+    //         return $this->render('sortie/index.html.twig', [
+    //             'sorties' => $sorties_passees,
+    //         ]);
+    //     }
+    //     //sorites ou je suis inscris
+    //     if (isset($_REQUEST['checkbox_inscris'])) {
+    //         $id = $security->getUser()->getParticipant()->getId();
+    //         $sorties = $sortieRepository->findAll();
+    //         $sorties_inscription = array();
+    //         foreach ($sorties as $sortie) {
+    //             $participants = $participantRepository->findBySortie($sortie->getId());
+    //            foreach($participants as $participant){
+    //             if ($participant['id'] == $id) {
+    //                    array_push($sorties_inscription, $sortie);
+    //                }
+    //            }
+    //         }
+
+    //         return $this->render('sortie/index.html.twig', [
+    //             'sorties' => $sorties_inscription,
+    //         ]);
+    //     }
+    //     //non inscris
+    //     if (isset($_REQUEST['checkbox_non_inscris'])) {
+    //         $id = $security->getUser()->getParticipant()->getId();
+    //         $sorties = $sortieRepository->findAll();
+    //         $sorties_inscription = array();
+    //         foreach ($sorties as $sortie) {
+    //             //flag pour ignorer les sorties quand inscrit
+    //             $flag = false;
+    //             $participants = $participantRepository->findBySortie($sortie->getId());
+    //            foreach($participants as $participant){
+    //                 if ($participant['id'] == $id) {
+    //                     $flag = true;
+    //                     break;
+    //                 } 
+    //             }
+    //             if ($flag == true){
+    //                 continue;
+    //             }
+    //             array_push($sorties_inscription, $sortie);
+    //         }
+
+    //         return $this->render('sortie/index.html.twig', [
+    //             'sorties' => $sorties_inscription,
+    //         ]);
+    //     }
+    //     //date('Y-m-d h:i:s')
+    //     if(isset($_REQUEST['date_dateDebut'])){
+    //         // $dateMin = strtotime($_GET['date_dateDebut']);
+    //         // $date_formatted = date('Y-m-d h:i:s',$dateMin);
+    //         $date_formatted = new DateTime($_GET['date_dateDebut']);
+    //         $date_formatted_fin = new DateTime($_GET['date_dateFin']);
+    //         //dd($dateMin);
+    //         $sorties = $sortieRepository->findAll();
+    //         $sorties_dateBetween = array();
+    //             foreach($sorties as $sortie){
+    //                 if($sortie->getDatedebut() > $date_formatted && $sortie->getDatedebut() < $date_formatted_fin){
+    //                     array_push($sorties_dateBetween, $sortie);
+    //                 }
+    //             }
+    //          return $this->render('sortie/index.html.twig', [
+    //             'sorties' => $sorties_dateBetween,
+    //         ]);   
+    //     }
+
+    //     //sorties suivant un site
+    //     if(isset($_REQUEST['select_site'])){
+    //         $sorties_site = array();
+    //         $id_site = $_GET['select_site'];
+    //         dd($id_site);
+    //         return $this->render('sortie/index.html.twig', [
+    //             'sorties' => $sorties_site,
+    //         ]);   
+    //     }
+    //     //return liste complète des sorties
+    //     return $this->render('sortie/index.html.twig', [
+    //         'sorties' => $sortieRepository->findAll(),
+    //         'sites' => $siteRepository->findAll()
+
+
+    //     ]);
+    // }
            
 
     /**  

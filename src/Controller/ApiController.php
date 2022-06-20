@@ -14,12 +14,12 @@ use Symfony\Component\Serializer\SerializerInterface;
 class ApiController extends AbstractController
 {
     /**
-     * @Route("/api", name="app_api", methods={"GET"})
+     * @Route("/api/{id}", name="app_api", methods={"GET"})
      */
-    public function index(LieuRepository $lieuRepository, NormalizerInterface $normalizer, SerializerInterface $serializer): Response
+    public function index(LieuRepository $lieuRepository, NormalizerInterface $normalizer, SerializerInterface $serializer, $id): Response
     {
         // $lieux = $lieuRepository->findAll();
-        $lieux = $lieuRepository->findByVilleNoVille(1);
+        $lieux = $lieuRepository->findByVilleNoVille($id);
         // $lieuxNormalised = $normalizer->normalize($lieux, null, ['groups' => 'api']);
         // $json = json_encode($lieuxNormalised);
        

@@ -1,14 +1,32 @@
+let $sortie_ville = document.getElementById("sortie_ville")
+// console.log($sortie_ville.value)
 function returnLieux(event) {
     event.preventDefault()
-    const url = 'http://127.0.0.1:8000/api/'
+    const url = 'http://127.0.0.1:8000/api/' + $sortie_ville.value
+    console.log(url)
+    axios.get(url).then(function (response) {
+        $liste_lieux = response.data
+        console.log($liste_lieux)
+        for (let index = 0; index < $liste_lieux.length; index++) {
+            console.log($liste_lieux[index]);
+            console.log($liste_lieux[index].id);
+            console.log($liste_lieux[index].nom);
+        }
+        $select = '<select id="sortie_lieuNolieu" name="sortie[lieuNolieu]">'
+        for (let index = 0; index < $liste_lieux.length; index++) {
+            $select += '<option value="' + $liste_lieux[index].id + '">' + $liste_lieux[index].nom + '</option>'
+        }
+        $select+='</select>'
+        
+    document.getElementById('sortie_lieuNolieu').innerHTML = $select
 
-    axios.get(url).then(function(response){
-        console.log(response)
-    })
+    console.log("Nom : " + response.data[0].nom)
+
+
+})
 
 }
 
-let $sortie_ville = document.querySelector("#sortie_ville")
 $sortie_ville.addEventListener("change", returnLieux)
 
 

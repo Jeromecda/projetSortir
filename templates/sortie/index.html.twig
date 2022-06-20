@@ -5,24 +5,46 @@
 
 {% block body %}
 	<h1>Sortie index</h1>
-	<div class="cell grid-y grid-margin-y">
+	<div class="cell grid-x grid-margin-x">
 		<form action="{{ path('app_sortie_index') }}" method="get">
-			<div class="cell">
-				<div class="cell">
-					<input type="checkbox" name="checkbox_orga" id="checkbox_orga"><label>Les sorties que j'organise</label>
+			<div class="grid-container">
+				<div class="grid-x medium-6 cell">
+					<label >Site : </label>
+					<select name="select_site" id="select_site">
+					
+						<option value="-1">aucun site</option>
+						{# {% if sites is defined %}
+						{% for site in sites %}
+						<option value="{{site.id}}">{{site.nom}}</option>
+						{% endfor %}
+						{% endif %} #}
+					</select>
 				</div>
-				<div class="cell">
-					<input type="checkbox" name="checkbox_inscris" id="checkbox_inscris"><label>les sorties auquelles je suis inscris</label>
+				<div class="grid-x medium-6 cell">
+					
+					<label >Entre </label>
+					<input type="date" name="date_dateDebut" id="date_dateDebut">
+					<label > et </label>
+					<input type="date" name="date_dateFin" id="date_dateFin">
+					
+					<div class=" grid-x cell">
+						<div class="cell">
+							<input type="checkbox" name="checkbox_orga" id="checkbox_orga"><label>Les sorties que j'organise</label>
+						</div>
+						<div class="grid-x cell">
+							<input type="checkbox" name="checkbox_inscris" id="checkbox_inscris"><label>les sorties auquelles je suis inscris</label>
+						</div>
+						<div class="grid-x cell">
+							<input type="checkbox" name="checkbox_non_inscris" id="checkbox_non_inscris"><label>les sorties auquelles je ne suis pas inscris</label>
+						</div>
+						<div class="grid-x cell">
+							<input type="checkbox" name="checkbox_passees" id="checkbox_passees"><label>Les sorties passées</label>
+						</div>
+					</div>
 				</div>
-				<div class="cell">
-					<input type="checkbox" name="checkbox_non_inscris" id="checkbox_non_inscris"><label>les sorties auquelles je ne suis pas inscris</label>
+				<div class="grid-x medium-6 cell">
+					<button class="btn button secondary ">filtrer</button>
 				</div>
-				<div class="cell">
-					<input type="checkbox" name="checkbox_passees" id="checkbox_passees"><label>Les sorties passées</label>
-				</div>
-			</div>
-			<div class="cell">
-				<button class="btn button secondary ">filtrer</button>
 			</div>
 		</form>
 	</div>

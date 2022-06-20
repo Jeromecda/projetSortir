@@ -57,7 +57,7 @@
 			<div class="grid-x grid-padding-x">
 				<div class="medium-6 large-6 cell">
                     <label id="lieu" name="lieu">lieu
-						{# {{ form_widget(form.lieuNolieu) }} #}
+						{{ form_widget(form.lieuNolieu) }}
 					</label>
 				</div>
 				{# <div class="medium-6 large-6 cell">
@@ -74,6 +74,11 @@
 				<div class="medium-6 large-6 cell">
                     <label>site organisateur
 						{{ form_widget(form.siteOrganisateur) }}
+					</label>
+				</div>
+				<div class="medium-6 large-6 cell">
+                    <label>Ville
+						{{ form_widget(form.ville) }}
 					</label>
 				</div>
 			</div>

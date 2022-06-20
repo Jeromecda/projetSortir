@@ -33,26 +33,40 @@ class SortieController extends AbstractController
     //     ]);
 
     // }
+
     // public function index(SortieRepository $sortieRepository, Security $security): Response
     // {
-    //     if(isset($_REQUEST['checkbox_orga'])){
+        // if (isset($_REQUEST['checkbox_orga'])) {
+        //     $id = $security->getUser()->getParticipant()->getId();
+        //     //var_dump($id);
+        //     return $this->render('sortie/index.html.twig', [
+        //         'sorties' => $sortieRepository->findByOrganisateur($id),
+        //     ]);
+        // }
+        // if (isset($_REQUEST['checkbox_passees'])) {
 
-    //         $id = $security->getUser()->getParticipant()->getId();
-    //         var_dump($id);
-    //         return $this->render('sortie/index.html.twig', [
-    //             'sorties' => $sortieRepository->findByOrganisateur($id),
-    //         ]);
+        //     $sorties = $sortieRepository->findAll();
+        //     // dd($sorties);
+        //     $sorties_passees = array();
+        //     foreach ($sorties as $sortie) {
+        //         if (new DateTime(date('Y-m-d h:i:s')) > $sortie->getDatecloture()) {
+        //             array_push($sorties_passees, $sortie);
+        //         }
+        //     }
 
-    //     }
-    //         return $this->render('sortie/index.html.twig', [
-    //             'sorties' => $sortieRepository->findAll(),
+        //     return $this->render('sortie/index.html.twig', [
+        //         'sorties' => $sorties_passees,
+        //     ]);
+        // }
 
-    //         ]);
+        // return $this->render('sortie/index.html.twig', [
+        //     'sorties' => $sortieRepository->findAll(),
 
-    // }
+        // ]);
 
-    public function index(SortieRepository $sortieRepository, Security $security): Response
-    {
+
+        public function index(SortieRepository $sortieRepository, Security $security, ParticipantRepository $participantRepository): Response
+        {
         if (isset($_REQUEST['checkbox_orga'])) {
             $id = $security->getUser()->getParticipant()->getId();
             //var_dump($id);
@@ -63,19 +77,63 @@ class SortieController extends AbstractController
         if (isset($_REQUEST['checkbox_passees'])) {
 
             $sorties = $sortieRepository->findAll();
-            // dd($sorties);
+            
             $sorties_passees = array();
             foreach ($sorties as $sortie) {
-                if (new DateTime(date('Y-m-d h:i:s')) > $sortie->getDatecloture()) {
+                if (new DateTime(date('Y-m-d h:i:s')) > $sortie->getDatedebut()) {
                     array_push($sorties_passees, $sortie);
                 }
             }
-
+                //dd($sorties_passees);
             return $this->render('sortie/index.html.twig', [
                 'sorties' => $sorties_passees,
             ]);
         }
+        //sorites ou je suis inscris
+        if (isset($_REQUEST['checkbox_inscris'])) {
+            $id = $security->getUser()->getParticipant()->getId();
+            $sorties = $sortieRepository->findAll();
+            $sorties_inscription = array();
+            foreach ($sorties as $sortie) {
+                $participants = $participantRepository->findBySortie($sortie->getId());
+               foreach($participants as $participant){
+                if ($participant['id'] == $id) {
+                       array_push($sorties_inscription, $sortie);
+                   }
+               }
+            }
 
+            return $this->render('sortie/index.html.twig', [
+                'sorties' => $sorties_inscription,
+            ]);
+        }
+        //non inscris
+        if (isset($_REQUEST['checkbox_non_inscris'])) {
+            $id = $security->getUser()->getParticipant()->getId();
+            $sorties = $sortieRepository->findAll();
+            $sorties_inscription = array();
+            foreach ($sorties as $sortie) {
+                //flag pour ignorer les sorties quand inscrit
+                $flag = false;
+                $participants = $participantRepository->findBySortie($sortie->getId());
+               foreach($participants as $participant){
+                    if ($participant['id'] == $id) {
+                        $flag = true;
+                        break;
+                    } 
+                }
+                if ($flag == true){
+                    continue;
+                }
+                array_push($sorties_inscription, $sortie);
+            }
+
+            return $this->render('sortie/index.html.twig', [
+                'sorties' => $sorties_inscription,
+            ]);
+        }
+
+        //return liste complète des sorties
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortieRepository->findAll(),
 

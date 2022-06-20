@@ -54,14 +54,14 @@ class SortieType extends AbstractType
                     'choice_label' => 'nom'
                 ]
             )
-            // ->add(
-            //     'lieuNolieu',
-            //     EntityType::class,
-            //     [
-            //         'class' => Lieu::class,
-            //         'choice_label' => 'nom'
-            //     ]
-            // )
+            ->add(
+                'lieuNolieu',
+                EntityType::class,
+                [
+                    'class' => Lieu::class,
+                    'choice_label' => 'nom'
+                ]
+            )
             ->add(
                 'ville',
                 EntityType::class,
@@ -73,20 +73,19 @@ class SortieType extends AbstractType
                 ]
             );
 
-        $builder->get('ville')->addEventListener(
-            FormEvents::POST_SUBMIT,
-            function (FormEvent $event) {
-                $form = $event->getForm();
-                // $data = $event->getData();            
-                $form->getParent()->add('lieuNolieu', EntityType::class, [
-                    'class' => Lieu::class,
-                    'placeholder' => 'Choississez un lieu',
-                    'choice_label' => 'nom',
-                    'choices' => $form->getData()->getLieus()
-                ]);
-            }
-
-        );
+        // $builder->get('ville')->addEventListener(
+        //     FormEvents::POST_SUBMIT,
+        //     function (FormEvent $event) {
+        //         $form = $event->getForm();
+        //         // $data = $event->getData();            
+        //         $form->getParent()->add('lieuNolieu', EntityType::class, [
+        //             'class' => Lieu::class,
+        //             'placeholder' => 'Choississez un lieu',
+        //             'choice_label' => 'nom',
+        //             'choices' => $form->getData()->getLieus()
+        //         ]);
+        //     }
+        // );
     }
 
 

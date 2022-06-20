@@ -180,11 +180,12 @@ class SortieController extends AbstractController
             // $dateMin = strtotime($_GET['date_dateDebut']);
             // $date_formatted = date('Y-m-d h:i:s',$dateMin);
             $date_formatted = new DateTime($_GET['date_dateDebut']);
+            $date_formatted_fin = new DateTime($_GET['date_dateFin']);
             //dd($dateMin);
             $sorties = $sortieRepository->findAll();
             $sorties_dateBetween = array();
                 foreach($sorties as $sortie){
-                    if($sortie->getDatedebut() > $date_formatted){
+                    if($sortie->getDatedebut() > $date_formatted && $sortie->getDatedebut() < $date_formatted_fin){
                         array_push($sorties_dateBetween, $sortie);
                     }
                 }

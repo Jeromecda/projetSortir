@@ -9,16 +9,7 @@
 			</li>
 
 
-			{% if app.user %}
-				{% if is_granted('ROLE_ADMIN') %}
-					<li>
-						<a href="{{ path('app_ville_index') }}">Villes</a>
-					</li>
-					<li>
-						<a href="{{ path('app_site_index') }}">Sites</a>
-					</li>
-            	{% endif %}
-				
+			{% if app.user %}			
 				<li>
 					<a href="{{ path('app_participant_edit',{'id':app.user.participant.id}) }}">Mon profil</a>
 				</li>
@@ -33,6 +24,14 @@
 					<a href="{{ path('app_register') }}">register</a>
 				</li>
 			{% endif %}
+			{% if is_granted("ROLE_ADMIN") %}
+				<li>
+					<a href="{{ path('app_ville_index') }}">Villes</a>
+				</li>
+				<li>
+					<a href="{{ path('app_site_index') }}">Sites</a>
+				</li>
+            {% endif %}
 		</ul>
 		<div>
 	</div>

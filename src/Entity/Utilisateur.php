@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email", "pseudo"}, message="There is already an account with this email")
  */
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -27,7 +27,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private $email;
 
      /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, unique=true)
      */
     private $pseudo;
 

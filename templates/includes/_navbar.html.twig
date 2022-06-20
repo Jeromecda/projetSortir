@@ -9,7 +9,7 @@
 			</li>
 
 
-			{% if app.user %}
+			{% if app.user %}			
 				<li>
 					<a href="{{ path('app_participant_edit',{'id':app.user.participant.id}) }}">Mon profil</a>
 				</li>
@@ -26,12 +26,12 @@
 			{% endif %}
 			{% if is_granted("ROLE_ADMIN") %}
 				<li>
-					<a href="#">villes</a>
+					<a href="{{ path('app_ville_index') }}">Villes</a>
 				</li>
 				<li>
-					<a href="#">sites</a>
+					<a href="{{ path('app_site_index') }}">Sites</a>
 				</li>
-			{% endif %}
+            {% endif %}
 		</ul>
 		<div>
 	</div>

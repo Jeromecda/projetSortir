@@ -237,6 +237,14 @@ class Sortie
 
         return $this;
     }
+    // public function removeParticipant(Participant $participant): self
+    // {
+    //     if ($this->participants->removeElement($participant)) {
+    //         $participant->removeInscription($this);
+    //     }
+
+    //     return $this;
+    // }
 
     public function getOrganisateur(): ?Participant
     {

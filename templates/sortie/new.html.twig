@@ -8,11 +8,11 @@
 
 	{{ form_start(form) }}
 	{# <form>
-			       {{ form_widget(form) }}
-			       <button class="btn button success">{{ button_label|default('Save') }}</button>
-			   </form>
-			   
-			   #}
+						       {{ form_widget(form) }}
+						       <button class="btn button success">{{ button_label|default('Save') }}</button>
+						   </form>
+						   
+						   #}
 
 
 	<div class="grid-container">
@@ -63,6 +63,10 @@
 					{{ form_widget(form.nbinscriptionsmax) }}
 				</label>
 			</div>
+			<div class="medium-6 large-6 cell">
+				<label id="detail_lieu">Détails lieu
+				</label>
+			</div>
 		</div>
 		<div class="grid-x grid-padding-x">
 			<div class="medium-6 large-6 cell">
@@ -71,27 +75,16 @@
 				</label>
 			</div>
 			{# <div class="medium-6 large-6 cell">
-							<label>url de la photo
-								{{ form_widget(form.urlPhoto) }}
-							</label>
-						</div> #}
+				<label>url de la photo
+					{{ form_widget(form.urlPhoto) }}
+				</label>
+			</div> #}
 			<div class="medium-6 large-6 cell">
 				<label>description de la sortie
 					{{ form_widget(form.descriptioninfos) }}
 				</label>
 			</div>
-			{# {% if lieu is defined and lieu is not null %}
-						<div class="medium-6 large-6 cell">
-							<label>Détails du lieu
-								{{ sortie.lieuNolieu.nom }}
-								{{ sortie.lieuNolieu.rue }}
-								{{ sortie.lieuNolieu.villeNoVille.nom }}
-								{{ sortie.lieuNolieu.villeNoVille.codePostal }}
-								{{ sortie.lieuNolieu.latitude }}
-								{{ sortie.lieuNolieu.longitude }}
-							</label>
-						</div>
-			            {% endif %} #}
+
 		</div>
 	</div>
 
@@ -99,17 +92,17 @@
 	{{ form_end(form) }}
 
 	{# {{ form_widget(form.nom) }}
-			       {{ form_widget(form.datedebut) }}
-			       {{ form_widget(form.duree) }}
-			       {{ form_widget(form.datecloture) }}
-			       {{ form_widget(form.nbinscriptionsmax) }}
-			       {{ form_widget(form.descriptioninfos) }}
-			       {{ form_widget(form.urlPhoto) }}
-			       {{ form_widget(form.etatNoEtat) }}
-			       {{ form_widget(form.lieuNolieu) }}
-			       {{ form_widget(form.participants) }}
-			   
-			       {{ form_widget(form.siteOrganisateur) }} #}
+						       {{ form_widget(form.datedebut) }}
+						       {{ form_widget(form.duree) }}
+						       {{ form_widget(form.datecloture) }}
+						       {{ form_widget(form.nbinscriptionsmax) }}
+						       {{ form_widget(form.descriptioninfos) }}
+						       {{ form_widget(form.urlPhoto) }}
+						       {{ form_widget(form.etatNoEtat) }}
+						       {{ form_widget(form.lieuNolieu) }}
+						       {{ form_widget(form.participants) }}
+						   
+						       {{ form_widget(form.siteOrganisateur) }} #}
 
 
 	<a class="btn button warning" href="{{ path('app_sortie_index') }}">back to list</a>

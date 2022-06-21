@@ -9,8 +9,10 @@
 		<form action="{{ path('app_sortie_index') }}" method="get">
 			<div class="grid-container">
 				<div class="grid-x medium-6 cell">
-					<label >Site : </label>
+					<label>Site :
+					</label>
 					<select name="select_site" id="select_site">
+
 						<option value="aucun site">aucun site</option>
 						{# <option value="site1">site1</option> #}
 						{# {% for site in sites %}
@@ -19,12 +21,15 @@
 					</select>
 				</div>
 				<div class="grid-x medium-6 cell">
-					
-					<label >Entre </label>
+
+					<label>Entre
+					</label>
 					<input type="date" name="date_dateDebut" id="date_dateDebut">
-					<label > et </label>
+					<label>
+						et
+					</label>
 					<input type="date" name="date_dateFin" id="date_dateFin">
-					
+
 					<div class=" grid-x cell">
 						<div class="cell">
 								<input type="checkbox" name="checkbox_orga" id="checkbox_orga" {{ check_orga is defined?"Checked":"" }}>
@@ -77,14 +82,26 @@
 								<a class="btn button primary" href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
 									<i class="fa-solid fa-eye"></i>
 								</a>
-								{% if is_granted("ROLE_USER") %}
+								{% if is_granted("ROLE_USER") and app.user.id != sortie.organisateur.id or is_granted("ROLE_ADMIN") %}
+									<a class="btn button success" href="{{ path('app_sortie_signup', {'id': sortie.id}) }}">
+										<i class="fa-solid fa-plus"></i>
+									</a>
+									{% for participant in sortie.participants %}
+										{% if app.user.id == participant.id %}
+											<a class="btn button alert" href="{{ path('app_sortie_signout', {'id': sortie.id}) }}">
+												<i class="fa-solid fa-trash"></i>
+											</a>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+								{% if app.user.id == sortie.organisateur.id %}
 									<a class="btn button warning" href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">
 										<i class="fa-solid fa-pen"></i>
 									</a>
 								{% endif %}
 							</td>
 						</tr>
-						{% else %}
+					{% else %}
 						<tr>
 							<td colspan="10">no records found</td>
 						</tr>
@@ -95,4 +112,3 @@
 	</div>
 	<a class="btn button secondary" href="{{ path('app_sortie_new') }}">Create new</a>
 {% endblock %}
-		

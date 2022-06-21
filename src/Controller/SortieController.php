@@ -38,7 +38,7 @@ class SortieController extends AbstractController
     //     ]);
 
     // }
-    //     public function index(SortieRepository $sortieRepository, Security $security, ParticipantRepository $participantRepository): Response
+    //     public function index(SortieRepository $sortieRepository, Security $security, ParticipantRepository $participantRepository, SiteRepository $siteRepository): Response
     //     {
     //         if (isset($_REQUEST['checkbox_orga'])) {
     //         $id = $security->getUser()->getParticipant()->getId();
@@ -50,7 +50,7 @@ class SortieController extends AbstractController
     //     if (isset($_REQUEST['checkbox_passees'])) {
 
     //         $sorties = $sortieRepository->findAll();
-            
+
     //         $sorties_passees = array();
     //         foreach ($sorties as $sortie) {
     //             if (new DateTime(date('Y-m-d h:i:s')) > $sortie->getDatedebut()) {
@@ -130,6 +130,7 @@ class SortieController extends AbstractController
 
     //     ]);
     // }
+
         public function index(SortieRepository $sortieRepository, Security $security, ParticipantRepository $participantRepository, SiteRepository $siteRepository): Response
         {
         if (isset($_REQUEST['checkbox_orga'])) {
@@ -229,7 +230,7 @@ class SortieController extends AbstractController
             'sites' => $siteRepository->findAll(),
         ]);
     }
-           
+          
 
     /**  
      * @isGranted("ROLE_USER")
@@ -291,12 +292,6 @@ class SortieController extends AbstractController
             ]);
             // Si la date du jour est inférieure a la date de cloture un utilisateur peut s'inscrire
 
-        } elseif (new DateTime(date('Y-m-d h:i:s')) < $sortie->getDatecloture()) {
-            $user = $security->getUser()->getParticipant();
-            // dd($user);
-            $sortie->addParticipant($user);
-            $sortieRepository->add($sortie, true);
-            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
         } else {
             // dd($security->getUser());
             dd($sortie->getOrganisateur());
@@ -305,6 +300,38 @@ class SortieController extends AbstractController
         }
     }
 
+    /**
+     * @isGranted("ROLE_USER")
+     * @Route("/{id}/signout", name="app_sortie_signout", methods={"GET", "POST"})
+     */
+    public function signout(Request $request, Sortie $sortie, SortieRepository $sortieRepository, Security $security, EntityManagerInterface $em): Response
+    {
+        $user = $security->getUser()->getParticipant();
+        // dd($user);
+        $sortie->removeParticipant($user);
+        $sortieRepository->add($sortie, true);
+
+        // dd('participant enlevé ?');
+
+        return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @isGranted("ROLE_USER")
+     * @Route("/{id}/signup", name="app_sortie_signup", methods={"GET", "POST"})
+     */
+    public function signup(Request $request, Sortie $sortie, SortieRepository $sortieRepository, Security $security, EntityManagerInterface $em): Response
+    {
+        $user = $security->getUser()->getParticipant();
+        if (new DateTime(date('Y-m-d h:i:s')) < $sortie->getDatecloture()) {
+            // dd($user);
+            $sortie->addParticipant($user);
+            $sortieRepository->add($sortie, true);
+            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+        } else {
+            return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
+        }
+    }
 
 
     /**

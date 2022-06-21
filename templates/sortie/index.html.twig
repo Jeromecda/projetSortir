@@ -6,7 +6,7 @@
 {% block body %}
 	<h1>Sortie index</h1>
 	<div class="cell grid-x grid-margin-x">
-		<form action="{{ path('app_sortie_index') }}" method="get">
+		<form action="{{ path('app_sortie_index') }}" method="post">
 			<div class="grid-container">
 				<div class="grid-x medium-6 cell">
 					<label>Site :
@@ -15,9 +15,11 @@
 
 						<option value="aucun site">aucun site</option>
 						{# <option value="site1">site1</option> #}
-						{# {% for site in sites %}
-						<option value="{{site.id}}">{{site.nom}}</option>
-						{% endfor %} #}
+						{% if sites is defined %}
+							{% for site in sites %}
+								<option value="{{site.id}}">{{site.nom}}</option>
+							{% endfor %}
+						{% endif %}
 					</select>
 				</div>
 				<div class="grid-x medium-6 cell">
@@ -32,7 +34,7 @@
 
 					<div class=" grid-x cell">
 						<div class="cell">
-								<input type="checkbox" name="checkbox_orga" id="checkbox_orga" {{ check_orga is defined?"Checked":"" }}>
+							<input type="checkbox" name="checkbox_orga" id="checkbox_orga" {{ check_orga is defined?"Checked":"" }}>
 							<label>Les sorties que j'organise</label>
 						</div>
 						<div class="grid-x cell">
@@ -94,7 +96,7 @@
 										{% endif %}
 									{% endfor %}
 								{% endif %}
-								{% if app.user.id == sortie.organisateur.id %}
+								{% if is_granted("ROLE_ADMIN") or app.user.id == sortie.organisateur.id %}
 									<a class="btn button warning" href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">
 										<i class="fa-solid fa-pen"></i>
 									</a>

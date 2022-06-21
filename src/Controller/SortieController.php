@@ -29,7 +29,7 @@ use function PHPUnit\Framework\isNull;
 class SortieController extends AbstractController
 {
     /**
-     * @Route("/", name="app_sortie_index", methods={"GET"})
+     * @Route("/", name="app_sortie_index", methods={"GET", "POST"})
      */
     // public function index(SortieRepository $sortieRepository, Security): Response
     // {
@@ -131,8 +131,8 @@ class SortieController extends AbstractController
     //     ]);
     // }
 
-        public function index(SortieRepository $sortieRepository, Security $security, ParticipantRepository $participantRepository, SiteRepository $siteRepository): Response
-        {
+    public function index(SortieRepository $sortieRepository, Security $security, ParticipantRepository $participantRepository, SiteRepository $siteRepository): Response
+    {
         if (isset($_REQUEST['checkbox_orga'])) {
             $check_orga = true;
             $id = $security->getUser()->getParticipant()->getId();
@@ -144,31 +144,31 @@ class SortieController extends AbstractController
         if (isset($_REQUEST['checkbox_passees'])) {
             $check_passees = true;
             $sorties = $sortieRepository->findAll();
-            
+
             $sorties_passees = array();
             foreach ($sorties as $sortie) {
                 if (new DateTime(date('Y-m-d h:i:s')) > $sortie->getDatedebut()) {
                     array_push($sorties_passees, $sortie);
                 }
             }
-                //dd($sorties_passees);
+            //dd($sorties_passees);
             return $this->render('sortie/index.html.twig', [
-                'sorties' => $sorties_passees, 'check_passees' =>$check_passees
+                'sorties' => $sorties_passees, 'check_passees' => $check_passees
             ]);
         }
         //sorites ou je suis inscris
         if (isset($_REQUEST['checkbox_inscris'])) {
-            $check_inscris= true;
+            $check_inscris = true;
             $id = $security->getUser()->getParticipant()->getId();
             $sorties = $sortieRepository->findAll();
             $sorties_inscription = array();
             foreach ($sorties as $sortie) {
                 $participants = $participantRepository->findBySortie($sortie->getId());
-               foreach($participants as $participant){
-                if ($participant['id'] == $id) {
-                       array_push($sorties_inscription, $sortie);
-                   }
-               }
+                foreach ($participants as $participant) {
+                    if ($participant['id'] == $id) {
+                        array_push($sorties_inscription, $sortie);
+                    }
+                }
             }
 
             return $this->render('sortie/index.html.twig', [
@@ -177,7 +177,7 @@ class SortieController extends AbstractController
         }
         //non inscris
         if (isset($_REQUEST['checkbox_non_inscris'])) {
-            $check_non_inscris =true;
+            $check_non_inscris = true;
             $id = $security->getUser()->getParticipant()->getId();
             $sorties = $sortieRepository->findAll();
             $sorties_inscription = array();
@@ -185,13 +185,13 @@ class SortieController extends AbstractController
                 //flag pour ignorer les sorties quand inscrit
                 $flag = false;
                 $participants = $participantRepository->findBySortie($sortie->getId());
-               foreach($participants as $participant){
+                foreach ($participants as $participant) {
                     if ($participant['id'] == $id) {
                         $flag = true;
                         break;
-                    } 
+                    }
                 }
-                if ($flag == true){
+                if ($flag == true) {
                     continue;
                 }
                 array_push($sorties_inscription, $sortie);
@@ -202,7 +202,7 @@ class SortieController extends AbstractController
             ]);
         }
         //date('Y-m-d h:i:s')
-        if(isset($_REQUEST['date_dateDebut'])){
+        if (isset($_GET['date_dateDebut'])) {
             // $dateMin = strtotime($_GET['date_dateDebut']);
             // $date_formatted = date('Y-m-d h:i:s',$dateMin);
             $date_formatted = new DateTime($_GET['date_dateDebut']);
@@ -210,27 +210,33 @@ class SortieController extends AbstractController
             //dd($dateMin);
             $sorties = $sortieRepository->findAll();
             $sorties_dateBetween = array();
-                foreach($sorties as $sortie){
-                    if($sortie->getDatedebut() > $date_formatted && $sortie->getDatedebut() < $date_formatted_fin){
-                        array_push($sorties_dateBetween, $sortie);
-                    }
+            foreach ($sorties as $sortie) {
+                if ($sortie->getDatedebut() > $date_formatted && $sortie->getDatedebut() < $date_formatted_fin) {
+                    array_push($sorties_dateBetween, $sortie);
                 }
-             return $this->render('sortie/index.html.twig', [
+            }
+            return $this->render('sortie/index.html.twig', [
                 'sorties' => $sorties_dateBetween,
-            ]);   
+            ]);
         }
+
         //sorties suivant un site
-        // if(isset($_REQUEST['date_dateDebut'])){
-        //     $flag =true;
-        //     dd($flag);   
-        // }
-        //return liste complète des sorties
+        if (isset($_POST['select_site'])) {
+            $select = $_POST['select_site'];
+            return  $this->render('sortie/index.html.twig', [
+                'sites' => $siteRepository->findAll(),
+                'sorties' => $sortieRepository->findById($select),
+            ]);
+        } else {
+            // dd('ne rentre pas');
+        }
+
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortieRepository->findAll(),
             'sites' => $siteRepository->findAll(),
         ]);
     }
-          
+
 
     /**  
      * @isGranted("ROLE_USER")

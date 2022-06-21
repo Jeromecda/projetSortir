@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\Participant;
+use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Form\SortieType;
 use App\Repository\EtatRepository;
@@ -217,20 +218,15 @@ class SortieController extends AbstractController
                 'sorties' => $sorties_dateBetween,
             ]);   
         }
-
         //sorties suivant un site
-        if(isset($_REQUEST['select_site'])){
-            $sorties_site = array();
-            $id_site = $_GET['select_site'];
-            //dd($id_site);
-            return $this->render('sortie/index.html.twig', [
-                'sorties' => $sorties_site,
-            ]);   
-        }
+        // if(isset($_REQUEST['date_dateDebut'])){
+        //     $flag =true;
+        //     dd($flag);   
+        // }
         //return liste complète des sorties
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortieRepository->findAll(),
-            'sites' => $siteRepository->findAll()
+            'sites' => $siteRepository->findAll(),
         ]);
     }
            

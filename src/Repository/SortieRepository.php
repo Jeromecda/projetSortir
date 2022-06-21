@@ -40,6 +40,17 @@ class SortieRepository extends ServiceEntityRepository
         }
     }
 
+        public function isLike($value){
+            return $this->createQueryBuilder('s')
+                ->where('s.nom LIKE :word')
+                // ->orWhere('s.discription LIKE :word')
+                ->setParameter('word', '%'.$value.'%')
+                ->getQuery()
+                ->getResult();
+
+        }
+
+
 //    /**
 //     * @return Sortie[] Returns an array of Sortie objects
 //     */

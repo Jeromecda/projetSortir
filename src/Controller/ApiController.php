@@ -32,4 +32,13 @@ class ApiController extends AbstractController
         // $response->headers->set('Access-Control-Allow-Origin', '*');        
         return $response;
     }
+    /**
+     * @Route("/api/detail/{id}", name="app_api_detail", methods={"GET"})
+     */
+    public function detail(LieuRepository $lieuRepository, NormalizerInterface $normalizer, SerializerInterface $serializer, $id): Response
+    {
+        $lieu = $lieuRepository->findById($id);
+        $response = $this->json($lieu, 200, [], ['groups' => 'api']);
+        return $response;
+    }
 }

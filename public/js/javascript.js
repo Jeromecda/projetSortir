@@ -1,5 +1,8 @@
 let $sortie_ville = document.getElementById("sortie_ville")
+let $sortie_lieuNolieu = document.getElementById("sortie_lieuNolieu")
+let $detail_lieu = document.getElementById("detail_lieu")
 // console.log($sortie_ville.value)
+
 function returnLieux(event) {
     event.preventDefault()
     const url = 'http://127.0.0.1:8000/api/' + $sortie_ville.value
@@ -16,17 +19,33 @@ function returnLieux(event) {
         for (let index = 0; index < $liste_lieux.length; index++) {
             $select += '<option value="' + $liste_lieux[index].id + '">' + $liste_lieux[index].nom + '</option>'
         }
-        $select+='</select>'
-        
-    document.getElementById('sortie_lieuNolieu').innerHTML = $select
+        $select += '</select>'
 
-    console.log("Nom : " + response.data[0].nom)
+        document.getElementById('sortie_lieuNolieu').innerHTML = $select
+        // document.getElementById('detail_lieu').innerHTML = '<label id="detail_lieu">Détails lieu ' + $liste_lieux[index].rue + '</label>'
 
+        console.log("Nom : " + response.data[0].nom)
+    })
+}
+function returnDetail(event) {
+    event.preventDefault()
+    const url = 'http://127.0.0.1:8000/api/detail/' + $sortie_lieuNolieu.value
+    console.log(url)
+    axios.get(url).then(function (response) {
+        $detail_lieux = response.data
 
-})
+        $html =  '<label id="detail_lieu">Détails lieu '
+        + '<br> Rue ' +response.data[0].rue 
+        + '<br> Latitude : ' +response.data[0].latitude 
+        + '<br> Longitude : ' +response.data[0].longitude 
+        + '</label>'
+       
+        document.getElementById('detail_lieu').innerHTML = $html
 
+    })
 }
 
+$sortie_lieuNolieu.addEventListener("change", returnDetail)
 $sortie_ville.addEventListener("change", returnLieux)
 
 

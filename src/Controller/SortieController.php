@@ -222,10 +222,11 @@ class SortieController extends AbstractController
 
         //sorties suivant un site
         if (isset($_POST['select_site'])) {
-            $select = $_POST['select_site'];
+            $site = $siteRepository->findOneById($_POST['select_site']);
+      
             return  $this->render('sortie/index.html.twig', [
                 'sites' => $siteRepository->findAll(),
-                'sorties' => $sortieRepository->findById($select),
+                'sorties' => $sortieRepository->findBySiteOrganisateur($site),
             ]);
         } else {
             // dd('ne rentre pas');

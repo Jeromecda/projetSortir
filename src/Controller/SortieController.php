@@ -223,15 +223,25 @@ class SortieController extends AbstractController
         //sorties suivant un site
         if (isset($_POST['select_site'])) {
             $site = $siteRepository->findOneById($_POST['select_site']);
-      
+
             return  $this->render('sortie/index.html.twig', [
                 'sites' => $siteRepository->findAll(),
                 'sorties' => $sortieRepository->findBySiteOrganisateur($site),
             ]);
-        } else {
-            // dd('ne rentre pas');
-        }
+        } 
+        
+        // if (isset($_POST['nom_sortie'])) {
+        //     $nom_saisi = $_POST['nom_sortie'];
+        //     dd($nom_saisi);
+        //     $sorties_filtrees = $sortieRepository->isLike($nom_saisi);
 
+        //     return  $this->render('sortie/index.html.twig', [
+        //         'sites' => $siteRepository->findAll(),
+        //         'sorties' => $sortieRepository->isLike($nom_saisi),
+        //     ]);
+        // } 
+        
+        // dd($sorties_filtrees);
         return $this->render('sortie/index.html.twig', [
             'sorties' => $sortieRepository->findAll(),
             'sites' => $siteRepository->findAll(),

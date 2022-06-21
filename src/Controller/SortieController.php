@@ -134,6 +134,8 @@ class SortieController extends AbstractController
     public function index(SortieRepository $sortieRepository, Security $security, ParticipantRepository $participantRepository, SiteRepository $siteRepository): Response
     {
         if (isset($_REQUEST['checkbox_orga'])) {
+            // dd('STOP Selection ORGANISATEUR');
+
             $check_orga = true;
             $id = $security->getUser()->getParticipant()->getId();
             //var_dump($id);
@@ -142,6 +144,8 @@ class SortieController extends AbstractController
             ]);
         }
         if (isset($_REQUEST['checkbox_passees'])) {
+            // dd('STOP Selection passés');
+
             $check_passees = true;
             $sorties = $sortieRepository->findAll();
 
@@ -158,6 +162,8 @@ class SortieController extends AbstractController
         }
         //sorites ou je suis inscris
         if (isset($_REQUEST['checkbox_inscris'])) {
+            // dd('STOP Selection inscrit');
+
             $check_inscris = true;
             $id = $security->getUser()->getParticipant()->getId();
             $sorties = $sortieRepository->findAll();
@@ -177,6 +183,8 @@ class SortieController extends AbstractController
         }
         //non inscris
         if (isset($_REQUEST['checkbox_non_inscris'])) {
+            // dd('STOP Selection non-inscrit');
+
             $check_non_inscris = true;
             $id = $security->getUser()->getParticipant()->getId();
             $sorties = $sortieRepository->findAll();
@@ -203,6 +211,8 @@ class SortieController extends AbstractController
         }
         //date('Y-m-d h:i:s')
         if (isset($_GET['date_dateDebut'])) {
+            // dd('STOP Selection Date');
+
             // $dateMin = strtotime($_GET['date_dateDebut']);
             // $date_formatted = date('Y-m-d h:i:s',$dateMin);
             $date_formatted = new DateTime($_GET['date_dateDebut']);
@@ -221,25 +231,27 @@ class SortieController extends AbstractController
         }
 
         //sorties suivant un site
-        if (isset($_POST['select_site'])) {
+        if (isset($_POST['select_site']) && $_POST['select_site'] != 0) {
+            // dd('STOP Selection SITE');
             $site = $siteRepository->findOneById($_POST['select_site']);
-
             return  $this->render('sortie/index.html.twig', [
                 'sites' => $siteRepository->findAll(),
                 'sorties' => $sortieRepository->findBySiteOrganisateur($site),
             ]);
         } 
         
-        // if (isset($_POST['nom_sortie'])) {
-        //     $nom_saisi = $_POST['nom_sortie'];
-        //     dd($nom_saisi);
-        //     $sorties_filtrees = $sortieRepository->isLike($nom_saisi);
+        if (isset($_POST["nom_sortie"])) {
+            // dd('STOP Champ de recherche');
+            $nom_saisi = $_POST['nom_sortie'];
 
-        //     return  $this->render('sortie/index.html.twig', [
-        //         'sites' => $siteRepository->findAll(),
-        //         'sorties' => $sortieRepository->isLike($nom_saisi),
-        //     ]);
-        // } 
+            // dd($nom_saisi);
+            // $sorties_filtrees = $sortieRepository->isLike($nom_saisi);
+
+            return  $this->render('sortie/index.html.twig', [
+                'sites' => $siteRepository->findAll(),
+                'sorties' => $sortieRepository->isLike($nom_saisi),
+            ]);
+        } 
         
         // dd($sorties_filtrees);
         return $this->render('sortie/index.html.twig', [
@@ -247,8 +259,6 @@ class SortieController extends AbstractController
             'sites' => $siteRepository->findAll(),
         ]);
     }
-
-
     /**  
      * @isGranted("ROLE_USER")
      * @Route("/new", name="app_sortie_new", methods={"GET", "POST"})

@@ -7,11 +7,11 @@ function returnLieux(event) {
     axios.get(url).then(function (response) {
         $liste_lieux = response.data
         console.log($liste_lieux)
-        for (let index = 0; index < $liste_lieux.length; index++) {
-            console.log($liste_lieux[index]);
-            console.log($liste_lieux[index].id);
-            console.log($liste_lieux[index].nom);
-        }
+        // for (let index = 0; index < $liste_lieux.length; index++) {
+        //     console.log($liste_lieux[index]);
+        //     console.log($liste_lieux[index].id);
+        //     console.log($liste_lieux[index].nom);
+        // }
         $select = '<select id="sortie_lieuNolieu" name="sortie[lieuNolieu]">'
         for (let index = 0; index < $liste_lieux.length; index++) {
             $select += '<option value="' + $liste_lieux[index].id + '">' + $liste_lieux[index].nom + '</option>'

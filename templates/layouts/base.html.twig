@@ -11,6 +11,7 @@
 		<link rel="stylesheet" href="{{ asset('css/style.css')}}">
 	</head>
 	<body>
+
 		<div class="grid-container">
 			<header>
 
@@ -26,6 +27,14 @@
 						</div>
 					{% endif %}
 				{% endif %}
+				{# {% for label,messages in app.flashes %}
+					{% for message in messages %}
+						<div class="flash-{{ label }}">
+							{{ message }}
+						</div>
+						
+					{% endfor %}
+				{% endfor %} #}
 			</header>
 			{% block body %}{% endblock %}
 

@@ -21,8 +21,8 @@
                 <td>{{ ville.nom }}</td>
                 <td>{{ ville.codePostal }}</td>
                 <td>
-                    <a href="{{ path('app_ville_show', {'id': ville.id}) }}">show</a>
-                    <a href="{{ path('app_ville_edit', {'id': ville.id}) }}">edit</a>
+                    <a class="btn button primary"href="{{ path('app_ville_show', {'id': ville.id}) }}"><i class="fa-solid fa-eye"></i></a>
+                    <a class="btn button warning"href="{{ path('app_ville_edit', {'id': ville.id}) }}"><i class="fa-solid fa-pen"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_ville_new') }}">Create new</a>
+    <a class="btn button secondary"href="{{ path('app_ville_new') }}">Create new</a>
 {% endblock %}

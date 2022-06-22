@@ -47,7 +47,7 @@
 		</tbody>
 	</table>
 
-	<a class="btn button warning" href="{{ path('app_participant_index') }}">back to list</a>
+	<a class="btn button warning" href="{{ path('app_sortie_index') }}">back to list</a>
 	{% if is_granted("ROLE_ADMIN") %}
 		<a class="btn button secondary" href="{{ path('app_participant_edit', {'id': participant.id}) }}">edit</a>
 

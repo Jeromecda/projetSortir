@@ -39,8 +39,11 @@ class LieuController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $lieuRepository->add($lieu, true);
+            $this->addFlash('notice',
+            'La création du lieu est réussie');
 
-            return $this->redirectToRoute('app_lieu_index', [], Response::HTTP_SEE_OTHER);
+
+            return $this->redirectToRoute('app_sortie_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('lieu/new.html.twig', [
@@ -70,6 +73,9 @@ class LieuController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $lieuRepository->add($lieu, true);
+            $this->addFlash('notice',
+            'La modification du lieu est réussie');
+
 
             return $this->redirectToRoute('app_lieu_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -87,6 +93,8 @@ class LieuController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$lieu->getId(), $request->request->get('_token'))) {
             $lieuRepository->remove($lieu, true);
+            $this->addFlash('notice',
+            'La suppression du lieu est réussie');
         }
 
         return $this->redirectToRoute('app_lieu_index', [], Response::HTTP_SEE_OTHER);

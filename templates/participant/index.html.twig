@@ -34,10 +34,10 @@
 					<td>{{ participant.administrateur ? 'Yes' : 'No' }}</td>
 					<td>{{ participant.actif ? 'Yes' : 'No' }}</td>
 					<td>
-						<a href="{{ path('app_participant_show', {'id': participant.id}) }}">show</a>
+						<a class="btn button primary" href="{{ path('app_participant_show', {'id': participant.id}) }}"><i class="fa-solid fa-eye"></i></a>
 						{% if is_granted("ROLE_ADMIN") %}
 
-							<a href="{{ path('app_participant_edit', {'id': participant.id}) }}">edit</a>
+							<a class="btn button warning"href="{{ path('app_participant_edit', {'id': participant.id}) }}"><i class="fa-solid fa-pen"></i></a>
 						{% endif %}
 					</td>
 				</tr>
@@ -49,5 +49,5 @@
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_participant_new') }}">Create new</a>
+	<a class="btn button secondary"href="{{ path('app_participant_new') }}">Create new</a>
 {% endblock %}

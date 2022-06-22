@@ -8,7 +8,7 @@
 
     {{ include('participant/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_participant_registration') }}">back to list</a>
+    <a class="btn button warning"href="{{ path('app_participant_registration') }}">back to list</a>
 
     {{ include('participant/_delete_form.html.twig') }}
 {% endblock %}

@@ -59,7 +59,7 @@
 				{% for participant in participants %}
 				<tr>
 					<td>
-						{{ participant.pseudo }}
+						<a href="{{ path('app_participant_show', {'id': participant.id}) }}">{{ participant.pseudo }}</a>
 					</td>
 					<td>
 						{{ participant.nom }} {{ participant.prenom}}

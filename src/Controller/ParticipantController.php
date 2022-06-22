@@ -81,6 +81,7 @@ class ParticipantController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $participantRepository->add($participant, true);
+            $this->addFlash('notice','La création du participant est réussie');
 
             return $this->redirectToRoute('app_participant_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -111,6 +112,7 @@ class ParticipantController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $participantRepository->add($participant, true);
+            $this->addFlash('notice','La modification est réussie');
 
             return $this->redirectToRoute('app_participant_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -128,6 +130,7 @@ class ParticipantController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete' . $participant->getId(), $request->request->get('_token'))) {
             $participantRepository->remove($participant, true);
+            $this->addFlash('notice','La suppression du participant est réussie');
         }
 
         return $this->redirectToRoute('app_participant_index', [], Response::HTTP_SEE_OTHER);

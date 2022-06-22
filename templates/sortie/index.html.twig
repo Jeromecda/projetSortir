@@ -5,7 +5,7 @@
 
 {% block body %}
 	<h1>Sortie index</h1>
-	<div class="cell grid-x grid-margin-x">
+	<div class="grid-x grid-margin-x">
 		<form action="{{ path('app_sortie_index') }}" method="post">
 			<div class="grid-container">
 
@@ -40,17 +40,18 @@
 
 					<div class=" grid-x cell">
 						<div class="cell">
-							<input type="checkbox" name="checkbox_orga" id="checkbox_orga" {{ check_orga is defined?"Checked":"" }}>
+							<input type="checkbox" name="checkbox_orga" id="checkbox_orga" {{ check_orga is defined and check_orga ?"Checked":"" }}>
 							<label>Les sorties que j'organise</label>
 						</div>
 						<div class="grid-x cell">
-							<input type="checkbox" name="checkbox_inscris" id="checkbox_inscris" {{ check_inscris is defined?"Checked":"" }}><label>les sorties auquelles je suis inscris</label>
+							<input type="checkbox" name="checkbox_inscris" id="checkbox_inscris" {{ check_inscris is defined and check_inscris ?"Checked":"" }}>
+							<label>les sorties auquelles je suis inscris</label>
 						</div>
 						<div class="grid-x cell">
-							<input type="checkbox" name="checkbox_non_inscris" id="checkbox_non_inscris" {{ check_non_inscris is defined?"Checked":"" }}><label>les sorties auquelles je ne suis pas inscris</label>
+							<input type="checkbox" name="checkbox_non_inscris" id="checkbox_non_inscris" {{ check_non_inscris is defined and check_non_inscris ?"Checked":"" }}><label>les sorties auquelles je ne suis pas inscris</label>
 						</div>
 						<div class="grid-x cell">
-							<input type="checkbox" name="checkbox_passees" id="checkbox_passees" {{ check_passees is defined?"Checked":"" }}><label>Les sorties passées</label>
+							<input type="checkbox" name="checkbox_passees" id="checkbox_passees" {{ check_passees is defined and check_passees ?"Checked":"" }}><label>Les sorties passées</label>
 						</div>
 					</div>
 				</div>
@@ -102,7 +103,7 @@
 										{% endif %}
 									{% endfor %}
 								{% endif %}
-								{% if is_granted("ROLE_ADMIN") or app.user.id == sortie.organisateur.id %}
+								{% if is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") and app.user.id == sortie.organisateur.id %}
 									<a class="btn button warning" href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">
 										<i class="fa-solid fa-pen"></i>
 									</a>

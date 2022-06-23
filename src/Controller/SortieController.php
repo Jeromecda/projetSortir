@@ -168,6 +168,7 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $sortieRepository->add($sortie, true);
+            $this->addFlash('notice','La création de la sortie est réussie');
 
             return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -205,6 +206,7 @@ class SortieController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $sortieRepository->add($sortie, true);
+                $this->addFlash('notice','La modificationde la sortie est réussie');
 
                 return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);
             }
@@ -266,6 +268,7 @@ class SortieController extends AbstractController
         if ($this->isGranted('ROLE_ADMIN') || ($security->getUser()->getId() == $sortie->getOrganisateur()->getId())) {
             if ($this->isCsrfTokenValid('delete' . $sortie->getId(), $request->request->get('_token'))) {
                 $sortieRepository->remove($sortie, true);
+                $this->addFlash('notice','La suppression de la sortie est réussie');
             }
         }
         return $this->redirectToRoute('app_sortie_index', [], Response::HTTP_SEE_OTHER);

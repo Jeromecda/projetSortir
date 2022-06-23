@@ -68,7 +68,7 @@ class SortieType extends AbstractType
                 [
                     'class' => Ville::class,
                     'choice_label' => 'nom',
-                    'placeholder' => 'Choississez une ville',
+                    // 'placeholder' => 'Choississez une ville',
                     'mapped' => false
                 ]
             );

@@ -34,11 +34,11 @@ function returnDetail(event) {
     axios.get(url).then(function (response) {
         $detail_lieux = response.data
 
-        $html =  '<label id="detail_lieu">Détails lieu '
-        + '<br> Rue ' +response.data[0].rue 
-        + '<br> Latitude : ' +response.data[0].latitude 
-        + '<br> Longitude : ' +response.data[0].longitude 
-        + '</label>'
+        $html =  '<label id="detail_lieu">Adresse :'
+        + '<ul><li>Rue ' +response.data[0].rue 
+        + '<li>Latitude : ' +response.data[0].latitude 
+        + '<li>Longitude : ' +response.data[0].longitude 
+        + '</ul></label>'
        
         document.getElementById('detail_lieu').innerHTML = $html
 
@@ -47,47 +47,3 @@ function returnDetail(event) {
 
 $sortie_lieuNolieu.addEventListener("change", returnDetail)
 $sortie_ville.addEventListener("change", returnLieux)
-
-
-
-// var $sortie_ville = $("#sortie_ville")
-// var $token = $("#sortie_token")
-
-// $sortie_ville.change(
-
-// function () {
-//     var $form = $(this).closest('form')
-//     var data = {}
-//     console.log('test')
-
-//     data[$token.attr('name')] = $token.val()
-//     data[$sortie_ville.attr('name')] = $sortie_ville.val()
-//     console.log(data)
-//     console.log($sortie_ville)
-
-//     $.post($form.attr('action'), data).then(function (response)
-//     {
-//         $("#sortie_lieuNolieu").replaceWith(
-//             $(response).find("#sortie_lieuNolieu")
-//             )
-//             console.log('mise a jour des sorties')
-//     })
-// })
-
-// function log($msg) {
-//     console.log($msg)
-// }
-
-
-// let selectElement = document.querySelector('#sortie_lieuNolieu');
-// let nomElement = selectElement.getAttribute('option');
-// console.log(selectElement);
-// console.log(nomElement);
-// console.log("On veut voir le résultat");
-// selectElement.addEventListener('change', (event) => {
-//     console.log("Petit flag");
-//     document.location.reload;
-//     let result = document.querySelector('#result');
-//     result.textContent = `${event.target.value}`;
-//     console.log(result);
-// });

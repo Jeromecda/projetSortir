@@ -18,9 +18,9 @@
         </tbody>
     </table>
 
-    <a class="btn button warning" href="{{ path('app_site_index') }}">back to list</a>
+    <a class="btn button warning" href="{{ path('app_site_index') }}">Retour</a>
 
-    <a class="btn button primary" href="{{ path('app_site_edit', {'id': site.id}) }}">edit</a>
+    <a class="btn button primary" href="{{ path('app_site_edit', {'id': site.id}) }}">Modifier</a>
 
     {{ include('site/_delete_form.html.twig') }}
 {% endblock %}

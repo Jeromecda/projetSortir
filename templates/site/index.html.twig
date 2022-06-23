@@ -1,9 +1,9 @@
 {% extends 'layouts/base.html.twig' %}
 
-{% block title %}Site index{% endblock %}
+{% block title %}Sites ENI{% endblock %}
 
 {% block body %}
-    <h1>Site index</h1>
+    <h1>Liste des sites ENI</h1>
 
     <table class="table">
         <thead>
@@ -31,5 +31,5 @@
         </tbody>
     </table>
 
-    <a class="btn button secondary" href="{{ path('app_site_new') }}">Create new</a>
+    <a class="btn button secondary" href="{{ path('app_site_new') }}">Ajouter un site</a>
 {% endblock %}

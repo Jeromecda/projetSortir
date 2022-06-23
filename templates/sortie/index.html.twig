@@ -4,16 +4,16 @@
 {% endblock %}
 
 {% block body %}
-<div class="grid-container">
+<div class="grid-container" style="margin-top:10px;">
 	<h1>Liste des sorties</h1>
 	<form action="{{ path('app_sortie_index') }}" method="post">
 		<div class="grid-x grid-padding-x">
 			<div class="grid-container">
 				<div class="grid-x grid-padding-x">
 					<div class="medium-12 large-12 cell">
-						<h4>
+						<h2 style="font-size:24px;">
 							Filter les sorties
-						</h4>
+						</h2>
 					</div>
 					<div class="medium-2 large-2 cell">
 						<div class="grid-container">
@@ -74,12 +74,14 @@
 
 						<div class="grid-container">
 							<div class="grid-y grid-y-padding-y cell">
+								<p>&NonBreakingSpace;</p>
 							</div>
-							<div class="grid-y cell"></div>
-							<div class="grid-yx cell">
+							<div class="cell"></div>
+							<div class="cell">
 								<button class="btn button secondary ">Rechercher</button>
 							</div>
-							<div class="grid-y cell">
+							<div class="cell">
+								<p>&NonBreakingSpace;</p>
 							</div>
 						</div>
 					</div>

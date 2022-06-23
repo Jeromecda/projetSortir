@@ -4,8 +4,11 @@
 
 {% block body %}
     <h1>Ajouter une nouvelle ville</h1>
+                {{ include('ville/_form.html.twig') }}
+            <div class="cell large-4">
+                <a class="btn button warning"href="{{ path('app_ville_index') }}">Retour</a>
+            </div>
+        </div>
+    </div>
 
-    {{ include('ville/_form.html.twig') }}
-
-    <a class="btn button warning"href="{{ path('app_ville_index') }}">Retour</a>
 {% endblock %}

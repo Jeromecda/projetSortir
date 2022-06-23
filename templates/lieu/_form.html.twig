@@ -1,4 +1,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn button primary">{{ button_label|default('Enregistrer') }}</button>
+    <div class="grid-x">
+        <div class="cell large-2">
+            <button class="btn button primary">{{ button_label|default('Enregistrer') }}</button>
+        </div>
 {{ form_end(form) }}

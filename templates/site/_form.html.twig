@@ -1,4 +1,6 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="submit success button">{{ button_label|default('Enregistrer') }}</button>
+    <div class="grid-x">
+        <div class="cell large-2">
+            <button class="submit success button">{{ button_label|default('Enregistrer') }}</button>
 {{ form_end(form) }}

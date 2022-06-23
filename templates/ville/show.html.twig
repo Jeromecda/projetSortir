@@ -21,10 +21,19 @@
             </tr>
         </tbody>
     </table>
+    <div class="container">
+        <div class="grid-x">
+            <div class="cell medium-2 large-2">
+                <a class="btn button warning" href="{{ path('app_ville_index') }}">Retour</a>
+            </div>
+            <div class="cell medium-2 large-2">
+                <a class="btn button primary" href="{{ path('app_ville_edit', {'id': ville.id}) }}">Modifier</a>
+            </div>
+            <div class="cell medium-4 large-4">
+                {{ include('ville/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
 
-    <a class="btn button warning" href="{{ path('app_ville_index') }}">Retour</a>
 
-    <a class="btn button primary" href="{{ path('app_ville_edit', {'id': ville.id}) }}">Modifier</a>
-
-    {{ include('ville/_delete_form.html.twig') }}
 {% endblock %}

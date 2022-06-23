@@ -74,11 +74,16 @@
 			<div class="medium-6 large-6 cell">
 				<label id="detail_lieu"></label>
 			</div>
+			<div class="cell medium-2 large-2">
+				<button class="btn button primary">{{ button_label|default('Mettre à jour') }}</button>
+			</div>
+			{{ form_end(form) }}
+			<div class="cell medium-2 large-2">
+				<a class="btn button warning" href="{{ path('app_sortie_index') }}">Retour</a>
+			</div>
+			<div class="cell medium-2 large-2">
+				{{ include('sortie/_delete_form.html.twig') }}
+			</div>
 		</div>
-	</div>
-    <button class="btn button primary">{{ button_label|default('Mettre à jour') }}</button>
-    {{ form_end(form) }}
-    <a class="btn button warning" href="{{ path('app_sortie_index') }}">Retour</a>
 
-    {{ include('sortie/_delete_form.html.twig') }}
 {% endblock %}

@@ -18,20 +18,45 @@ class ApiController extends AbstractController
      */
     public function index(LieuRepository $lieuRepository, NormalizerInterface $normalizer, SerializerInterface $serializer, $id): Response
     {
-        // $lieux = $lieuRepository->findAll();
+        // Requete SQL des lieux dont la ville à l'id récupérée par le js.
         $lieux = $lieuRepository->findByVilleNoVille($id);
+
+        //Normalisation : Transformation des objets lieux en tableaux
+        //Restriction des paramètres pris en compte au groupe api pour éviter les références circulaires 
         // $lieuxNormalised = $normalizer->normalize($lieux, null, ['groups' => 'api']);
+        //Encodage en json du tableau
         // $json = json_encode($lieuxNormalised);
        
         // Alternativement on peut utiliser le serializer
         // $json = $serializer->serialize($lieux, 'json', ['groups' => 'api']);
+
+        // On construit la réponse précisant le json et la nature de la réponse
         // $response = new Response($json, 200, ["Content-Type" => "application/json"]);
         // $response = new JsonResponse($json, 200, [], true);
 
+        //La serialisation complète peut être effectuée avec la fonction json en une seule ligne
         $response = $this->json($lieux, 200, [], ['groups' => 'api']);
-        // $response->headers->set('Access-Control-Allow-Origin', '*');        
         return $response;
     }
+    // /**
+    //  * @Route("/api/{id}", name="app_api", methods={"GET"})
+    //  */
+    // public function index(LieuRepository $lieuRepository, NormalizerInterface $normalizer, SerializerInterface $serializer, $id): Response
+    // {
+    //     // $lieux = $lieuRepository->findAll();
+    //     $lieux = $lieuRepository->findByVilleNoVille($id);
+    //     // $lieuxNormalised = $normalizer->normalize($lieux, null, ['groups' => 'api']);
+    //     // $json = json_encode($lieuxNormalised);
+       
+    //     // Alternativement on peut utiliser le serializer
+    //     // $json = $serializer->serialize($lieux, 'json', ['groups' => 'api']);
+    //     // $response = new Response($json, 200, ["Content-Type" => "application/json"]);
+    //     // $response = new JsonResponse($json, 200, [], true);
+
+    //     $response = $this->json($lieux, 200, [], ['groups' => 'api']);
+    //     // $response->headers->set('Access-Control-Allow-Origin', '*');        
+    //     return $response;
+    // }
     /**
      * @Route("/api/detail/{id}", name="app_api_detail", methods={"GET"})
      */

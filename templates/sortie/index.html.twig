@@ -79,41 +79,47 @@
 				</thead>
 				<tbody>
 					{% for sortie in sorties %}
-						<tr>
-							<td>{{ sortie.nom }}</td>
-							<td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
-							<td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
-							<td>{{ sortie.nbinscriptionsmax }}</td>
-							<td>{{ sortie.etatnoetat.libelle }}</td>
-							<td><a href="{{ path('app_participant_show', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }}
-								{{ sortie.organisateur.nom}}</a></td>
-							<td>
-								<a class="btn button primary" href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
-									<i class="fa-solid fa-eye"></i>
-								</a>
-								{% if is_granted("ROLE_USER") and app.user.id != sortie.organisateur.id or is_granted("ROLE_ADMIN") %}
-									<a class="btn button success" href="{{ path('app_sortie_signup', {'id': sortie.id}) }}">
-										<i class="fa-solid fa-plus"></i>
+						{% if "now"|date("Y-m-d") < sortie.datecloture|date_modify("+30 days")|date("Y-m-d") %}
+							<tr>
+								<td>{{ sortie.nom }}</td>
+								<td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
+								<td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
+								<td>{{ sortie.nbinscriptionsmax }}</td>
+								<td>{{ sortie.etatnoetat.libelle }}</td>
+								<td>
+									<a href="{{ path('app_participant_show', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }}
+										{{ sortie.organisateur.nom}}</a>
+								</td>
+								<td>
+									<a class="btn button primary" href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
+										<i class="fa-solid fa-eye"></i>
 									</a>
-									{% for participant in sortie.participants %}
-										{% if app.user.id == participant.id %}
-											<a class="btn button alert" href="{{ path('app_sortie_signout', {'id': sortie.id}) }}">
-												<i class="fa-solid fa-trash"></i>
+									{% if is_granted("ROLE_USER") and app.user.id != sortie.organisateur.id or is_granted("ROLE_ADMIN") %}
+										{% if sortie.dateDebut|date("Y-m-d") > "now"|date("Y-m-d") %}
+											<a class="btn button success" href="{{ path('app_sortie_signup', {'id': sortie.id}) }}">
+												<i class="fa-solid fa-plus"></i>
 											</a>
 										{% endif %}
-									{% endfor %}
-								{% endif %}
-								{% if is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") and app.user.id == sortie.organisateur.id %}
-									<a class="btn button warning" href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">
-										<i class="fa-solid fa-pen"></i>
-									</a>
-								{% endif %}
-							</td>
-						</tr>
-					{% else %}
-						<tr>
-							<td colspan="10">no records found</td>
-						</tr>
+										{% for participant in sortie.participants %}
+											{% if app.user.id == participant.id %}
+												<a class="btn button alert" href="{{ path('app_sortie_signout', {'id': sortie.id}) }}">
+													<i class="fa-solid fa-trash"></i>
+												</a>
+											{% endif %}
+										{% endfor %}
+									{% endif %}
+									{% if is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") and app.user.id == sortie.organisateur.id %}
+										<a class="btn button warning" href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">
+											<i class="fa-solid fa-pen"></i>
+										</a>
+									{% endif %}
+								</td>
+							</tr>
+						{% else %}
+							{# <tr>
+								<td colspan="10">no records found</td>
+							</tr> #}
+						{% endif %}
 					{% endfor %}
 				</tbody>
 			</table>

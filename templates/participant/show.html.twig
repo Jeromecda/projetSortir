@@ -8,10 +8,10 @@
 
 	<table class="table">
 		<tbody>
-			<tr>
+			{# <tr>
 				<th>Id</th>
 				<td>{{ participant.id }}</td>
-			</tr>
+			</tr> #}
 			<tr>
 				<th>Pseudo</th>
 				<td>{{ participant.utilisateur.pseudo }}</td>
@@ -47,9 +47,9 @@
 		</tbody>
 	</table>
 
-	<a class="btn button warning" href="{{ path('app_sortie_index') }}">back to list</a>
+	<a class="btn button warning" href="{{ path('app_sortie_index') }}">Retour</a>
 	{% if is_granted("ROLE_ADMIN") %}
-		<a class="btn button secondary" href="{{ path('app_participant_edit', {'id': participant.id}) }}">edit</a>
+		<a class="btn button secondary" href="{{ path('app_participant_edit', {'id': participant.id}) }}">Modifier</a>
 
 		{{ include('participant/_delete_form.html.twig') }}
 	{% endif %}

@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                {# <th>Id</th> #}
                 <th>Nom</th>
                 <th>Rue</th>
                 <th>Latitude</th>
@@ -19,14 +19,14 @@
         <tbody>
         {% for lieu in lieus %}
             <tr>
-                <td>{{ lieu.id }}</td>
+                {# <td>{{ lieu.id }}</td> #}
                 <td>{{ lieu.nom }}</td>
                 <td>{{ lieu.rue }}</td>
                 <td>{{ lieu.latitude }}</td>
                 <td>{{ lieu.longitude }}</td>
                 <td>
-                    <a class="btn button primary" href="{{ path('app_lieu_show', {'id': lieu.id}) }}">show</a>
-                    <a class="btn button warning" href="{{ path('app_lieu_edit', {'id': lieu.id}) }}">edit</a>
+                    <a class="btn button primary" href="{{ path('app_lieu_show', {'id': lieu.id}) }}"><i class="fa-solid fa-eye"></i></a>
+                    <a class="btn button warning" href="{{ path('app_lieu_edit', {'id': lieu.id}) }}"><i class="fa-solid fa-pen"></i></a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a class="btn button secondary" href="{{ path('app_lieu_new') }}">Create new</a>
+    <a class="btn button secondary" href="{{ path('app_lieu_new') }}">Ajouter un lieu</a>
 {% endblock %}

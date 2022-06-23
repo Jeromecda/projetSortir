@@ -1,4 +1,4 @@
-<div class="grid-x ">
+<div class="grid-x">
 	<div class="cell secondary large-6">
 		<h2>Logo Sortir.com</h2>
 	</div>
@@ -33,5 +33,18 @@
 				</li>
             {% endif %}
 		</ul>
-		<div>
 	</div>
+	<div class="cell large-12" align="Right">
+		{% if app.user %}
+			<div class="grid-padding-x">
+				Vous êtes connectés en tant
+				{{ app.user.userIdentifier }},
+				<a href="{{ path('app_logout') }}">Logout</a>
+				{% if is_granted("ROLE_ADMIN") %}
+					<br>
+					Administrateur
+				{% endif %}
+			</div>
+		{% endif %}
+	</div>
+</div>

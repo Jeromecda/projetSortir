@@ -14,27 +14,14 @@
 
 		<div class="grid-container">
 			<header>
-
 				{{ include('includes/_navbar.html.twig') }}
-				{% if app.user %}
-					<div class="mb-3">
-						Vous êtes connectés en tant
-						{{ app.user.userIdentifier }},
-						<a href="{{ path('app_logout') }}">Logout</a>
-						{% if is_granted("ROLE_ADMIN") %}
-							<br>
-							Administrateur
-						</div>
-					{% endif %}
-				{% endif %}
 				{% for label,messages in app.flashes %}
-				{% for message in messages %}
-				<div class="flash-{{ label }} ">
-					{{ message }}
-				</div>
-					
+					{% for message in messages %}
+						<div class="flash-{{ label }} ">
+							{{ message }}
+						</div>
+					{% endfor %}
 				{% endfor %}
-			{% endfor %}
 			</header>
 			{% block body %}{% endblock %}
 

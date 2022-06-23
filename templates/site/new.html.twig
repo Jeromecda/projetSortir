@@ -4,8 +4,10 @@
 
 {% block body %}
     <h1>Création de site ENI</h1>
-
-    {{ include('site/_form.html.twig') }}
-
-    <a class="btn button warning" href="{{ path('app_site_index') }}">Retour</a>
+        {{ include('site/_form.html.twig') }}
+        </div>
+        <div class="cell large-3">
+            <a class="btn button warning" href="{{ path('app_site_index') }}">Retour</a>
+        </div>
+    </div>
 {% endblock %}

@@ -1,14 +1,14 @@
 {% extends 'layouts/base.html.twig' %}
 
-{% block title %}Ville index{% endblock %}
+{% block title %}Villes{% endblock %}
 
 {% block body %}
-    <h1>Ville index</h1>
+    <h1>Liste des villes</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                {# <th>Id</th> #}
                 <th>Nom</th>
                 <th>CodePostal</th>
                 <th>actions</th>
@@ -17,7 +17,7 @@
         <tbody>
         {% for ville in villes %}
             <tr>
-                <td>{{ ville.id }}</td>
+                {# <td>{{ ville.id }}</td> #}
                 <td>{{ ville.nom }}</td>
                 <td>{{ ville.codePostal }}</td>
                 <td>
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a class="btn button secondary"href="{{ path('app_ville_new') }}">Create new</a>
+    <a class="btn button secondary"href="{{ path('app_ville_new') }}">Ajouter une ville</a>
 {% endblock %}

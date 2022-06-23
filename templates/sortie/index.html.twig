@@ -71,6 +71,7 @@
 						</div>
 					</div>
 					<div class="medium-1 large-1 cell">
+
 						<div class="grid-container">
 							<div class="grid-y grid-y-padding-y cell">
 							</div>
@@ -92,25 +93,25 @@
 				<thead>
 					<tr>
 						<th>Nom</th>
-						<th>Datedebut</th>
-						<th>Datecloture</th>
-						<th>NbPlacesTotal</th>
-						<th>Etatsortie</th>
+						<th>Date de début</th>
+						<th>Date de clôture</th>
+						<th>Nombre de places</th>
+						{# <th>Etatsortie</th> #}
 						{# <th>UrlPhoto</th> #}
 						{# <th>Inscrit</th> #}
 						<td>Organisateur</td>
-						<th>actions</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for sortie in sorties %}
 					{% if "now"|date("Y-m-d") < sortie.datecloture|date_modify("+30 days")|date("Y-m-d") %}
-							<tr>
-								<td>{{ sortie.nom }}</td>
+							<tr >
+								<td >{{ sortie.nom }}</td>
 								<td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
 								<td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
-								<td>{{ sortie.nbinscriptionsmax }}</td>
-								<td>{{ sortie.etatnoetat.libelle }}</td>
+								<td align="center">{{ sortie.nbinscriptionsmax }}</td>
+								{# <td>{{ sortie.etatnoetat.libelle }}</td> #}
 								<td>
 									<a href="{{ path('app_participant_show', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }}
 										{{ sortie.organisateur.nom}}</a>
@@ -149,7 +150,7 @@
 				</tbody>
 			</table>
 		</div>
+		<a class="btn button secondary" href="{{ path('app_sortie_new') }}">Créer une sortie</a>
 	</div>
-	<a class="btn button secondary" href="{{ path('app_sortie_new') }}">Create new</a>
 </div>
 {% endblock %}

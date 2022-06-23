@@ -38,6 +38,8 @@ class EtatController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $etatRepository->add($etat, true);
+            $this->addFlash('notice',
+            'La creation est réussie');
 
             return $this->redirectToRoute('app_etat_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -68,6 +70,7 @@ class EtatController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $etatRepository->add($etat, true);
+            $this->addFlash('notice','La modification de l\'état est réussie');
 
             return $this->redirectToRoute('app_etat_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -85,6 +88,7 @@ class EtatController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$etat->getId(), $request->request->get('_token'))) {
             $etatRepository->remove($etat, true);
+            $this->addFlash('notice','La suppression de l\'état est réussie');
         }
 
         return $this->redirectToRoute('app_etat_index', [], Response::HTTP_SEE_OTHER);

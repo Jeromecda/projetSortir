@@ -150,20 +150,22 @@
 														<a class="btn button success" href="{{ path('app_sortie_signup', {'id': sortie.id}) }}">
 															<i class="fa-solid fa-plus"></i>
 														{% else %}
-															{% set flag = false %}
+															{% set inscrit = false %}
 															{% for participant in sortie.participants %}
 																{% if app.user.id == participant.utilisateur.id %}
 																	<a class="btn button alert" href="{{ path('app_sortie_signout', {'id': sortie.id}) }}">
 																		<i class="fa-solid fa-trash"></i>
 																	</a>
-																	{% set flag = true %}
-
-																{% elseif app.user.id != participant.utilisateur.id and not flag %}
-																	<a class="btn button success" href="{{ path('app_sortie_signup', {'id': sortie.id}) }}">
-																		<i class="fa-solid fa-plus"></i>
-																	</a>
+																	{% set inscrit = true %}
 																{% endif %}
 															{% endfor %}
+
+															{% if not inscrit %}
+																<a class="btn button success" href="{{ path('app_sortie_signup', {'id': sortie.id}) }}">
+																	<i class="fa-solid fa-plus"></i>
+																</a>
+															{% endif %}
+															{% set flag = true %}
 														{% endif %}
 													{% endif %}
 													{% for participant in sortie.participants %}{% endfor %}
@@ -174,8 +176,8 @@
 								</tr>
 								{% else %}
 								{# <tr>
-																																																																																																																																																								<td colspan="10">no records found</td>
-																																																																																																																																																							</tr> #}
+																																																																																																																																																																																<td colspan="10">no records found</td>
+																																																																																																																																																																															</tr> #}
 							{% endif %}
 						{% endfor %}
 					</tbody>

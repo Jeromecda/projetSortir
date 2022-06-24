@@ -1,7 +1,10 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <div class="grid-x">
-        <div class="cell large-2">
-            <button class="btn button primary">{{ button_label|default('Enregistrer') }}</button>
-        </div>
-{{ form_end(form) }}
+{{ form_widget(form) }}
+<div class="grid-x">
+	<div class="cell large-2">
+		<button class="btn button primary">{{ button_label|default('Enregistrer') }}</button>
+	</div>
+	<a class="btn button success group-button" href="{{ path('app_ville_new') }}">
+		Nouvelle ville
+	</a>
+</div>{{ form_end(form) }}

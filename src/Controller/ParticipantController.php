@@ -45,7 +45,7 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @isGranted("ROLE_USER")
+     * @isGranted("ROLE_ADMIN")
      * @Route("/", name="app_participant_index", methods={"GET"})
      */
     public function index(ParticipantRepository $participantRepository, Security $security): Response
@@ -114,7 +114,7 @@ class ParticipantController extends AbstractController
             $participantRepository->add($participant, true);
             $this->addFlash('notice','La modification est réussie');
 
-            return $this->redirectToRoute('app_participant_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_participant_edit', ['id' => $this->getUser()->getId(),], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('participant/edit.html.twig', [

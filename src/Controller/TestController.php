@@ -9,12 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class TestController extends AbstractController
 {
     /**
-     * @Route("/test", name="app_test")
+     * isGranted("ROLE_ADMIN")
+     * @Route("/", name="home")
      */
     public function index(): Response
     {
-        return $this->render('test/index.html.twig', [
-            'controller_name' => 'TestController',
-        ]);
+        return $this->redirectToRoute('app_sortie_index');
     }
 }

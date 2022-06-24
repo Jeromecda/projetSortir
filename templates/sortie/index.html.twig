@@ -1,49 +1,158 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
-{% block title %}Sortie index{% endblock %}
+{% block title %}Liste des sorties
+{% endblock %}
 
 {% block body %}
-    <h1>Sortie index</h1>
+<div class="grid-container" style="margin-top:10px;">
+	<h1>Liste des sorties</h1>
+	<form action="{{ path('app_sortie_index') }}" method="post">
+		<div class="grid-x grid-padding-x">
+			<div class="grid-container">
+				<div class="grid-x grid-padding-x">
+					<div class="medium-12 large-12 cell">
+						<h2 style="font-size:24px;">
+							Filter les sorties
+						</h2>
+					</div>
+					<div class="medium-2 large-2 cell">
+						<div class="grid-container">
+							<div class="grid-y grid-padding-y">
+								<div class="cell medium-4 large-4">
+									<label>Site :</label>
+								</div>
+								<div class="cell medium-4 large-4">
+									<label>Le nom de la sortie :</label>
+								</div>
+								<div class="cell medium-4 large-4">
+									<label>Entre : </label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="medium-5 large-5 cell">
+						<div class="cell">
+							<select name="select_site" id="select_site">
+								<option value="aucun site">aucun site</option>
+								{# <option value="site1">site1</option> #}
+								{% if sites is defined %}
+								{% for site in sites %}
+								<option value="{{site.id}}">{{site.nom}}</option>
+								{% endfor %}
+								{% endif %}
+							</select>
+							
+						</div>
+						<div class="cell">
+							<div class="input-group">
+								<input type="text" name="nom_sortie" id="nomSortie"/>
+							</div>
+							<div class="input-group">
+								<input type="date" name="date_dateDebut" id="date_dateDebut">
+									<label class="large-offset-1">	 et </label>
+								<input type="date" class="large-offset-1" name="date_dateFin" id="date_dateFin">
+							</div>
+						</div>
+					</div>	
+					<div class="medium-4 large-4 cell">
+						<div class=" grid-x cell">
+							<div class="cell">
+								<input type="checkbox" name="checkbox_orga" id="checkbox_orga" {{ check_orga is defined and check_orga ?"Checked":"" }}><label>Les sorties que j'organise</label>
+							</div>
+							<div class="cell">
+								<input type="checkbox" name="checkbox_inscris" id="checkbox_inscris" {{ check_inscris is defined and check_inscris ?"Checked":"" }}><label>Les sorties auxquelles je suis inscris</label>
+							</div>
+							<div class="cell">
+								<input type="checkbox" name="checkbox_non_inscris" id="checkbox_non_inscris" {{ check_non_inscris is defined and check_non_inscris ?"Checked":"" }}><label>Les sorties auxquelles je ne suis pas inscris</label>
+							</div>
+							<div class="cell">
+								<input type="checkbox" name="checkbox_passees" id="checkbox_passees" {{ check_passees is defined and check_passees ?"Checked":"" }}><label>Les sorties passées</label>
+							</div>
+						</div>
+					</div>
+					<div class="medium-1 large-1 cell">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Datedebut</th>
-                <th>Duree</th>
-                <th>Datecloture</th>
-                <th>Nbinscriptionsmax</th>
-                <th>Descriptioninfos</th>
-                <th>Etatsortie</th>
-                <th>UrlPhoto</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for sortie in sorties %}
-            <tr>
-                <td>{{ sortie.id }}</td>
-                <td>{{ sortie.nom }}</td>
-                <td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ sortie.duree }}</td>
-                <td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ sortie.nbinscriptionsmax }}</td>
-                <td>{{ sortie.descriptioninfos }}</td>
-                <td>{{ sortie.etatsortie }}</td>
-                <td>{{ sortie.urlPhoto }}</td>
-                <td>
-                    <a href="{{ path('app_sortie_show', {'id': sortie.id}) }}">show</a>
-                    <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_sortie_new') }}">Create new</a>
+						<div class="grid-container">
+							<div class="grid-y grid-y-padding-y cell">
+								<p>&NonBreakingSpace;</p>
+							</div>
+							<div class="cell"></div>
+							<div class="cell">
+								<button class="btn button secondary ">Rechercher</button>
+							</div>
+							<div class="cell">
+								<p>&NonBreakingSpace;</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="grid-x grid-padding-x">
+		<div class="cell">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Date de début</th>
+						<th>Date de clôture</th>
+						<th>Nombre de places</th>
+						{# <th>Etatsortie</th> #}
+						{# <th>UrlPhoto</th> #}
+						{# <th>Inscrit</th> #}
+						<td>Organisateur</td>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for sortie in sorties %}
+					{% if "now"|date("Y-m-d") < sortie.datecloture|date_modify("+30 days")|date("Y-m-d") %}
+							<tr >
+								<td >{{ sortie.nom }}</td>
+								<td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
+								<td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
+								<td align="center">{{ sortie.nbinscriptionsmax }}</td>
+								{# <td>{{ sortie.etatnoetat.libelle }}</td> #}
+								<td>
+									<a href="{{ path('app_participant_show', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.prenom }}
+										{{ sortie.organisateur.nom}}</a>
+									</td>
+									<td>
+										<a class="btn button primary" href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
+											<i class="fa-solid fa-eye"></i>
+										</a>
+										{% if is_granted("ROLE_USER") and app.user.id != sortie.organisateur.id or is_granted("ROLE_ADMIN") %}
+										{% if sortie.dateDebut|date("Y-m-d") > "now"|date("Y-m-d") %}
+										<a class="btn button success" href="{{ path('app_sortie_signup', {'id': sortie.id}) }}">
+												<i class="fa-solid fa-plus"></i>
+											</a>
+											{% endif %}
+										{% for participant in sortie.participants %}
+											{% if app.user.id == participant.id %}
+											<a class="btn button alert" href="{{ path('app_sortie_signout', {'id': sortie.id}) }}">
+													<i class="fa-solid fa-trash"></i>
+												</a>
+											{% endif %}
+											{% endfor %}
+											{% endif %}
+											{% if is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") and app.user.id == sortie.organisateur.id %}
+										<a class="btn button warning" href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">
+											<i class="fa-solid fa-pen"></i>
+										</a>
+										{% endif %}
+								</td>
+							</tr>
+						{% else %}
+							{# <tr>
+								<td colspan="10">no records found</td>
+							</tr> #}
+							{% endif %}
+							{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<a class="btn button secondary" href="{{ path('app_sortie_new') }}">Ajouter une sortie</a>
+	</div>
+</div>
 {% endblock %}

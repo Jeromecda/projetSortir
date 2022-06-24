@@ -1,0 +1,25 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    <h1>Inscription</h1>
+
+    {{ form_start(registrationForm) }}
+    {{ form_row(registrationForm.participant.prenom) }}
+    {{ form_row(registrationForm.participant.nom) }}
+    {{ form_row(registrationForm.participant.telephone) }}
+    {{ form_row(registrationForm.pseudo) }}
+    {{ form_row(registrationForm.email) }}
+    {{ form_row(registrationForm.plainPassword, {
+        label: 'Password'
+    }) }}
+    {# {{ form_row(registrationForm.participant.inscription) }} #}
+    {{ form_row(registrationForm.participant.siteNoSite, {label: 'Site ENI'}) }}
+    {# {{ form_row(registrationForm.participant.administrateur) }} #}
+    {# {{ form_row(registrationForm.participant.actif) }} #}
+    {{ form_row(registrationForm.agreeTerms, {label: 'Accepter les CGU'}) }}
+    
+        <button type="submit" class="btn button primary">S'enregistrer</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

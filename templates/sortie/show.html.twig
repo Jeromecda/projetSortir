@@ -1,54 +1,81 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
-{% block title %}Sortie{% endblock %}
+{% block title %}Sortie
+{% endblock %}
 
 {% block body %}
-    <h1>Sortie</h1>
+	<h1>Sortie</h1>
+	<div class="grid-x grid-margin-x ">
+		<div class="cell">
+			<table class="table">
+				<tbody>
+					<tr>
+						<th>Intitulé</th>
+						<td>{{ sortie.nom }}</td>
+					</tr>
+					<tr>
+						<th>Description</th>
+						<td>{{ sortie.descriptioninfos }}</td>
+					</tr>
+					<tr>
+						<th>Date de début</th>
+						<td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
+					</tr>
+					<tr>
+						<th>Datede clôture</th>
+						<td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
+					</tr>
+					<tr>
+						<th>Durée</th>
+						<td>{{ sortie.duree }}
+							minutes</td>
+					</tr>
+					<tr>
+						<th>Nombre de places</th>
+						<td>{{ sortie.nbinscriptionsmax }}</td>
+					</tr>
+					{# <tr>
+										<th>Etatsortie</th>
+										<td>{{ sortie.etatnoetat.libelle }}</td>
+									</tr> #}
+					{# {% if sortie.urlPhoto is defined and sortie.urlPhoto is not null %}
+									<tr>
+										<th>UrlPhoto</th>
+										<td>{{ sortie.urlPhoto }}</td>
+									</tr>
+									{% endif %} #}
+				</tbody>
+			</table>
+			<h3 align="center" >Liste des participants</h3>
+			<label class="margin"></label>
+			<table class="table ">
+				<tbody>
+					<tr>
+						<th align="center" >Nom</th>
+					</tr>
+					{% for participant in participants %}
+						<tr align="center">
+							<td>
+								<a  href="{{ path('app_participant_show', {'id': participant.id}) }}">{{ participant.nom }}
+									{{ participant.prenom}}</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ sortie.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ sortie.nom }}</td>
-            </tr>
-            <tr>
-                <th>Datedebut</th>
-                <td>{{ sortie.datedebut ? sortie.datedebut|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Duree</th>
-                <td>{{ sortie.duree }}</td>
-            </tr>
-            <tr>
-                <th>Datecloture</th>
-                <td>{{ sortie.datecloture ? sortie.datecloture|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Nbinscriptionsmax</th>
-                <td>{{ sortie.nbinscriptionsmax }}</td>
-            </tr>
-            <tr>
-                <th>Descriptioninfos</th>
-                <td>{{ sortie.descriptioninfos }}</td>
-            </tr>
-            <tr>
-                <th>Etatsortie</th>
-                <td>{{ sortie.etatsortie }}</td>
-            </tr>
-            <tr>
-                <th>UrlPhoto</th>
-                <td>{{ sortie.urlPhoto }}</td>
-            </tr>
-        </tbody>
-    </table>
+		</div>
+		<div class="cell large-3">
+			<a class="btn button warning" href="{{ path('app_sortie_index') }}">back to list</a>
 
-    <a href="{{ path('app_sortie_index') }}">back to list</a>
-
-    <a href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">edit</a>
-
-    {{ include('sortie/_delete_form.html.twig') }}
+		</div>
+		<div class="cell large-1">
+			{% if is_granted("ROLE_ORGA") %}
+				<a class="btn button primary" href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">edit</a>
+			</div>
+			<div class="cell large-2">
+				{{ include('sortie/_delete_form.html.twig') }}
+			</div>
+		{% endif %}
+	</div>
 {% endblock %}

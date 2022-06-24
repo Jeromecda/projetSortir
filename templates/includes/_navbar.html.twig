@@ -1,0 +1,50 @@
+<div class="grid-x">
+	<div class="cell secondary large-6">
+		<h2>Logo Sortir.com</h2>
+	</div>
+	<div class="cell large-6">
+		<ul class="menu">
+			<li>
+				<a href="{{ path('app_sortie_index') }}">Sorties</a>
+			</li>
+
+
+			{% if app.user %}			
+				<li>
+					<a href="{{ path('app_participant_edit',{'id':app.user.participant.id}) }}">Mon profil</a>
+				</li>
+				<li>
+					<a href="{{ path('app_logout') }}">Déconnexion</a>
+				</li>
+			{% else  %}
+				<li>
+					<a href="{{ path('app_login') }}">Connexion</a>
+				</li>
+				<li>
+					<a href="{{ path('app_register') }}">Inscription</a>
+				</li>
+			{% endif %}
+			{% if is_granted("ROLE_ADMIN") %}
+				<li>
+					<a href="{{ path('app_ville_index') }}">Villes</a>
+				</li>
+				<li>
+					<a href="{{ path('app_site_index') }}">Sites</a>
+				</li>
+            {% endif %}
+		</ul>
+	</div>
+	<div class="cell large-12" align="Right">
+		{% if app.user %}
+			<div class="grid-padding-x">
+				Vous êtes connectés en tant
+				{{ app.user.userIdentifier }},
+				<a href="{{ path('app_logout') }}">Logout</a>
+				{% if is_granted("ROLE_ADMIN") %}
+					<br>
+					Administrateur
+				{% endif %}
+			</div>
+		{% endif %}
+	</div>
+</div>

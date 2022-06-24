@@ -9,8 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 /**
+ * @isGranted("ROLE_ADMIN")
  * @Route("/site")
  */
 class SiteController extends AbstractController
@@ -36,6 +39,7 @@ class SiteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $siteRepository->add($site, true);
+            $this->addFlash('notice','La création du site est réussie');
 
             return $this->redirectToRoute('app_site_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -66,6 +70,7 @@ class SiteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $siteRepository->add($site, true);
+            $this->addFlash('notice','La modificationt est réussie');
 
             return $this->redirectToRoute('app_site_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -83,6 +88,7 @@ class SiteController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$site->getId(), $request->request->get('_token'))) {
             $siteRepository->remove($site, true);
+            $this->addFlash('notice','La suppression du site est réussie');
         }
 
         return $this->redirectToRoute('app_site_index', [], Response::HTTP_SEE_OTHER);

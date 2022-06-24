@@ -6,11 +6,13 @@ use App\Entity\Etat;
 use App\Form\EtatType;
 use App\Repository\EtatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * @isGranted("ROLE_ADMIN")
  * @Route("/etat")
  */
 class EtatController extends AbstractController
@@ -36,6 +38,8 @@ class EtatController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $etatRepository->add($etat, true);
+            $this->addFlash('notice',
+            'La creation est réussie');
 
             return $this->redirectToRoute('app_etat_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -66,6 +70,7 @@ class EtatController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $etatRepository->add($etat, true);
+            $this->addFlash('notice','La modification de l\'état est réussie');
 
             return $this->redirectToRoute('app_etat_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -83,6 +88,7 @@ class EtatController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$etat->getId(), $request->request->get('_token'))) {
             $etatRepository->remove($etat, true);
+            $this->addFlash('notice','La suppression de l\'état est réussie');
         }
 
         return $this->redirectToRoute('app_etat_index', [], Response::HTTP_SEE_OTHER);

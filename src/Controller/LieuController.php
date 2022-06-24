@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\Entity\Lieu;
 use App\Form\LieuType;
 use App\Repository\LieuRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * @isGranted("ROLE_USER")
  * @Route("/lieu")
  */
 class LieuController extends AbstractController
@@ -26,6 +28,7 @@ class LieuController extends AbstractController
     }
 
     /**
+     * @isGranted("ROLE_USER")
      * @Route("/new", name="app_lieu_new", methods={"GET", "POST"})
      */
     public function new(Request $request, LieuRepository $lieuRepository): Response
@@ -36,8 +39,11 @@ class LieuController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $lieuRepository->add($lieu, true);
+            $this->addFlash('notice',
+            'La création du lieu est réussie');
 
-            return $this->redirectToRoute('app_lieu_index', [], Response::HTTP_SEE_OTHER);
+
+            return $this->redirectToRoute('app_sortie_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('lieu/new.html.twig', [
@@ -57,6 +63,7 @@ class LieuController extends AbstractController
     }
 
     /**
+     * @isGranted("ROLE_ADMIN")
      * @Route("/{id}/edit", name="app_lieu_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Lieu $lieu, LieuRepository $lieuRepository): Response
@@ -66,6 +73,9 @@ class LieuController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $lieuRepository->add($lieu, true);
+            $this->addFlash('notice',
+            'La modification du lieu est réussie');
+
 
             return $this->redirectToRoute('app_lieu_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -83,6 +93,8 @@ class LieuController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$lieu->getId(), $request->request->get('_token'))) {
             $lieuRepository->remove($lieu, true);
+            $this->addFlash('notice',
+            'La suppression du lieu est réussie');
         }
 
         return $this->redirectToRoute('app_lieu_index', [], Response::HTTP_SEE_OTHER);

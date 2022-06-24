@@ -1,54 +1,64 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
-{% block title %}Participant{% endblock %}
+{% block title %}Participant
+{% endblock %}
 
 {% block body %}
-    <h1>Participant</h1>
+	<h1>Participant</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ participant.id }}</td>
-            </tr>
-            <tr>
-                <th>Pseudo</th>
-                <td>{{ participant.pseudo }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ participant.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ participant.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>{{ participant.telephone }}</td>
-            </tr>
-            <tr>
-                <th>Mail</th>
-                <td>{{ participant.mail }}</td>
-            </tr>
-            <tr>
-                <th>Mot_de_passe</th>
-                <td>{{ participant.motDePasse }}</td>
-            </tr>
-            <tr>
-                <th>Administrateur</th>
-                <td>{{ participant.administrateur ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Actif</th>
-                <td>{{ participant.actif ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_participant_index') }}">back to list</a>
-
-    <a href="{{ path('app_participant_edit', {'id': participant.id}) }}">edit</a>
-
-    {{ include('participant/_delete_form.html.twig') }}
+	<table class="table">
+		<tbody>
+			{# <tr>
+				<th>Id</th>
+				<td>{{ participant.id }}</td>
+			</tr> #}
+			<tr>
+				<th>Pseudo</th>
+				<td>{{ participant.utilisateur.pseudo }}</td>
+			</tr>
+			<tr>
+				<th>Nom</th>
+				<td>{{ participant.nom }}</td>
+			</tr>
+			<tr>
+				<th>Prenom</th>
+				<td>{{ participant.prenom }}</td>
+			</tr>
+			<tr>
+				<th>Telephone</th>
+				<td>{{ participant.telephone }}</td>
+			</tr>
+			<tr>
+				<th>Mail</th>
+				<td>{{ participant.utilisateur.email }}</td>
+			</tr>
+			{# <tr>
+				<th>Mot_de_passe</th>
+				<td>{{ participant.utilisateur.password }}</td>
+			</tr> #}
+			<tr>
+				<th>Administrateur</th>
+				<td>{{ participant.administrateur ? 'Yes' : 'No' }}</td>
+			</tr>
+			<tr>
+				<th>Actif</th>
+				<td>{{ participant.actif ? 'Yes' : 'No' }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="container">
+		<div class="grid-x">
+			<div class="cell medium-4 large-4">
+				<a class="btn button warning" href="{{ path('app_sortie_index') }}">Retour</a>
+			</div>
+			{% if is_granted("ROLE_ADMIN") %}
+				<div class="cell medium-4 large-4">
+					<a class="btn button secondary" href="{{ path('app_participant_edit', {'id': participant.id}) }}">Modifier</a>
+				</div>
+				<div class="cell medium-2 large-2">
+					{{ include('participant/_delete_form.html.twig') }}
+				</div>
+				{% endif %}
+		</div>
+	</div>
 {% endblock %}

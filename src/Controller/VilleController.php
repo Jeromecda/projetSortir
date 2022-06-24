@@ -36,6 +36,8 @@ class VilleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $villeRepository->add($ville, true);
+            $this->addFlash('notice',
+            'La création de la ville est réussie');
 
             return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -66,6 +68,8 @@ class VilleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $villeRepository->add($ville, true);
+            $this->addFlash('notice',
+            'La modification de la ville est réussie');
 
             return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -83,6 +87,8 @@ class VilleController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$ville->getId(), $request->request->get('_token'))) {
             $villeRepository->remove($ville, true);
+            $this->addFlash('notice',
+            'La supression de la ville est réussie');
         }
 
         return $this->redirectToRoute('app_ville_index', [], Response::HTTP_SEE_OTHER);

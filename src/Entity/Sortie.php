@@ -6,6 +6,8 @@ use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\Constraints as Assert; 
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -50,11 +52,6 @@ class Sortie
     private $descriptioninfos;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $etatsortie;
-
-    /**
      * @ORM\Column(type="string", length=250, nullable=true)
      */
     private $urlPhoto;
@@ -68,6 +65,7 @@ class Sortie
     /**
      * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
      */
     private $lieuNolieu;
 
@@ -88,9 +86,16 @@ class Sortie
      */
     private $siteOrganisateur;
 
-    public function __construct()
+    public function __construct($user, Etat $etat)
     {
         $this->participants = new ArrayCollection();
+        // dd($user);
+        $participant = $user->getParticipant();
+        // dd($participant);
+        $this->setOrganisateur($participant);
+        $this->setEtatNoEtat($etat);
+        
+        // $this->setEtatNoEtat($this->getEtatNoEtat()->getLibelle());
     }
 
     public function getId(): ?int
@@ -170,18 +175,6 @@ class Sortie
         return $this;
     }
 
-    public function getEtatsortie(): ?int
-    {
-        return $this->etatsortie;
-    }
-
-    public function setEtatsortie(?int $etatsortie): self
-    {
-        $this->etatsortie = $etatsortie;
-
-        return $this;
-    }
-
     public function getUrlPhoto(): ?string
     {
         return $this->urlPhoto;
@@ -244,6 +237,14 @@ class Sortie
 
         return $this;
     }
+    // public function removeParticipant(Participant $participant): self
+    // {
+    //     if ($this->participants->removeElement($participant)) {
+    //         $participant->removeInscription($this);
+    //     }
+
+    //     return $this;
+    // }
 
     public function getOrganisateur(): ?Participant
     {

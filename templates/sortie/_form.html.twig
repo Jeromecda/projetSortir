@@ -1,4 +1,147 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+ <form>
+	{{ form_widget(form) }}
+	<button class="btn button success">{{ button_label|default('Save') }}</button>
+</form>
+
+
+
+{# {{ form_start(form) }} #}
+	{# <form>
+	{{ form_widget(form) }}
+		<button class="btn button success">{{ button_label|default('Save') }}</button>
+	</form> #}
+
+	{# <div class="grid-container">
+		<div class="grid-x grid-padding-x">
+			<div class="medium-6 large-6 cell">
+				<label>Nom
+					{{ form_widget(form.nom) }}
+				</label>
+			</div>
+			<div class="medium-6 large-6 cell">
+				<label>Site ENI organisateur
+					{{ form_widget(form.siteOrganisateur) }}
+				</label>
+			</div>
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="medium-3 large-3 cell">
+				<label>Date de début
+					{{ form_widget(form.datedebut) }}
+				</label>
+			</div>
+			<div class="medium-3 large-3 cell">
+				<label>Date de clôture
+					{{ form_widget(form.datecloture) }}
+				</label>
+			</div>
+			<div class="medium-6 large-6 cell">
+				<label>Ville
+					<div id="select_ville" onchange="returnLieux">
+						{{ form_widget(form.ville) }}
+					</div>
+				</label>
+			</div>
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="medium-3 large-3 cell">
+				<label>Nombre d'inscriptions maximum
+					{{ form_widget(form.nbinscriptionsmax) }}
+				</label>
+			</div>
+			<div class="medium-3 large-3 cell">
+				<label>Durée (minutes)
+					{{ form_widget(form.duree) }}
+				</label>
+			</div>
+			<div class="medium-6 large-6 cell">
+				<label class="group-label">Lieu de l'événement
+					<div class="input-group">
+						{{ form_widget(form.lieuNolieu) }}
+						<a class="btn button success group-button" href="{{ path('app_lieu_new') }}">
+							+
+						</a>
+					</div>
+				</label>
+			</div>
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="medium-6 large-6 cell">
+				<label>Description de la sortie
+					{{ form_widget(form.descriptioninfos) }}
+				</label>
+			</div>
+			<div class="medium-6 large-6 cell">
+				<label id="detail_lieu"></label>
+			</div>
+		</div>
+	</div> #}
+		
+		{# <div class="grid-container">
+			<div class="grid-x grid-padding-x">
+				<div class="medium-6 large-8 cell">
+					<label>Nom
+						{{ form_widget(form.nom) }}
+					</label>
+				</div>
+				<div class="medium-6 large-4 cell">
+					<label>durée
+						{{ form_widget(form.duree) }}
+					</label>
+				</div>
+			</div>
+		
+			<div class="grid-x grid-padding-x">
+				<div class="medium-6 large-6 cell">
+                    <label>date de Debut
+						{{ form_widget(form.datedebut) }}
+					</label>
+				</div>
+				<div class="medium-6 large-6 cell">
+                    <label>date de Cloture
+						{{ form_widget(form.datecloture) }}
+					</label>
+				</div>
+			</div>
+			
+			<div class="grid-x grid-padding-x">
+				<div class="medium-6 large-6 cell">
+                    <label>nombre d'inscription maximum
+						{{ form_widget(form.nbinscriptionsmax) }}
+					</label>
+				</div>
+			</div>
+			
+			<div class="grid-x grid-padding-x">
+				<div class="medium-12 large-12 cell">
+					<label>description de la sortie
+						{{ form_widget(form.descriptioninfos) }}
+					</label>
+				</div>
+			</div>
+			<div class="grid-x grid-padding-x">
+				<div class="medium-6 large-6 cell">
+                    <label id="lieu" name="lieu">lieu
+						{{ form_widget(form.lieuNolieu) }}
+					</label>
+				</div>
+				<div class="medium-6 large-6 cell">
+                    <label>site organisateur
+						{{ form_widget(form.siteOrganisateur) }}
+					</label>
+				</div>
+				<div class="medium-6 large-6 cell">
+                    <label>Ville
+						{{ form_widget(form.ville) }}
+					</label>
+				</div>
+			</div>
+		</div> #}
+		
+		{# <button class="btn button primary">{{ button_label|default('Save') }}</button>  #}
+		{{ form_end(form) }} 
+	

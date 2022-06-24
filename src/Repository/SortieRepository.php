@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -38,6 +39,17 @@ class SortieRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+        public function isLike($value){
+            return $this->createQueryBuilder('s')
+                ->where('s.nom LIKE :word')
+                // ->orWhere('s.discription LIKE :word')
+                ->setParameter('word', '%'.$value.'%')
+                ->getQuery()
+                ->getResult();
+
+        }
+
 
 //    /**
 //     * @return Sortie[] Returns an array of Sortie objects

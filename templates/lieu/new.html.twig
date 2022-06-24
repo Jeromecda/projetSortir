@@ -1,11 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
-{% block title %}New Lieu{% endblock %}
+{% block title %}Ajout lieu{% endblock %}
 
 {% block body %}
-    <h1>Create new Lieu</h1>
+    <h1>Créer un nouveau lieu</h1>
 
     {{ include('lieu/_form.html.twig') }}
-
-    <a href="{{ path('app_lieu_index') }}">back to list</a>
+    <div class="cell large-1">
+        <a class="btn button warning"  href="{{ path('app_sortie_new') }}">Retour</a>
+    </div>
+</div>
 {% endblock %}

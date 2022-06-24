@@ -1,49 +1,53 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
-{% block title %}Participant index{% endblock %}
+{% block title %}Participant index
+{% endblock %}
 
 {% block body %}
-    <h1>Participant index</h1>
+	<h1>Participant index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Pseudo</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Telephone</th>
-                <th>Mail</th>
-                <th>Mot_de_passe</th>
-                <th>Administrateur</th>
-                <th>Actif</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for participant in participants %}
-            <tr>
-                <td>{{ participant.id }}</td>
-                <td>{{ participant.pseudo }}</td>
-                <td>{{ participant.nom }}</td>
-                <td>{{ participant.prenom }}</td>
-                <td>{{ participant.telephone }}</td>
-                <td>{{ participant.mail }}</td>
-                <td>{{ participant.motDePasse }}</td>
-                <td>{{ participant.administrateur ? 'Yes' : 'No' }}</td>
-                <td>{{ participant.actif ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_participant_show', {'id': participant.id}) }}">show</a>
-                    <a href="{{ path('app_participant_edit', {'id': participant.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Pseudo</th>
+				<th>Nom</th>
+				<th>Prenom</th>
+				<th>Telephone</th>
+				<th>Mail</th>
+				{# <th>Mot_de_passe</th> #}
+				<th>Administrateur</th>
+				<th>Actif</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for participant in participants %}
+				<tr>
+					<td>{{ participant.id }}</td>
+					<td>{{ participant.utilisateur.pseudo }}</td>
+					<td>{{ participant.nom }}</td>
+					<td>{{ participant.prenom }}</td>
+					<td>{{ participant.telephone }}</td>
+					<td>{{ participant.utilisateur.email }}</td>
+					{# <td>{{ participant.utilisateur.password }}</td> #}
+					<td>{{ participant.administrateur ? 'Yes' : 'No' }}</td>
+					<td>{{ participant.actif ? 'Yes' : 'No' }}</td>
+					<td>
+						<a class="btn button primary" href="{{ path('app_participant_show', {'id': participant.id}) }}"><i class="fa-solid fa-eye"></i></a>
+						{% if is_granted("ROLE_ADMIN") %}
 
-    <a href="{{ path('app_participant_new') }}">Create new</a>
+							<a class="btn button warning"href="{{ path('app_participant_edit', {'id': participant.id}) }}"><i class="fa-solid fa-pen"></i></a>
+						{% endif %}
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="10">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a class="btn button secondary"href="{{ path('app_participant_new') }}">Ajouter un participant</a>
 {% endblock %}

@@ -1,11 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'layouts/base.html.twig' %}
 
 {% block title %}New Site{% endblock %}
 
 {% block body %}
-    <h1>Create new Site</h1>
-
-    {{ include('site/_form.html.twig') }}
-
-    <a href="{{ path('app_site_index') }}">back to list</a>
+    <h1>Création de site ENI</h1>
+        {{ include('site/_form.html.twig') }}
+        </div>
+        <div class="cell large-3">
+            <a class="btn button warning" href="{{ path('app_site_index') }}">Retour</a>
+        </div>
+    </div>
 {% endblock %}

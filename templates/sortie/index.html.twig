@@ -132,43 +132,52 @@
 											{{ sortie.organisateur.nom}}</a>
 									</td>
 									<td>
-										<a class="btn button primary" href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
-											<i class="fa-solid fa-eye"></i>
-										</a>
-										{% if is_granted("ROLE_USER") and app.user.id != sortie.organisateur.id or is_granted("ROLE_ADMIN") %}
-											{% if sortie.dateDebut|date("Y-m-d") > "now"|date("Y-m-d") %}
-												{% if sortie.participants is empty %}
-													<a class="btn button success" href="{{ path('app_sortie_signup', {'id': sortie.id}) }}">
-														<i class="fa-solid fa-plus"></i>
-													{% endif %}
-													{% for participant in sortie.participants %}
-														{% if app.user.id != participant.utilisateur.id %}
-															<a class="btn button success" href="{{ path('app_sortie_signup', {'id': sortie.id}) }}">
-																<i class="fa-solid fa-plus"></i>
-															</a>
-														{% endif %}
-													{% endfor %}
-												{% endif %}
-												{% for participant in sortie.participants %}
-													{% if app.user.id == participant.utilisateur.id %}
-														<a class="btn button alert" href="{{ path('app_sortie_signout', {'id': sortie.id}) }}">
-															<i class="fa-solid fa-trash"></i>
-														</a>
-													{% endif %}
-												{% endfor %}
-											{% endif %}
-											{% if is_granted("ROLE_ADMIN") or is_granted("ROLE_USER") and app.user.id == sortie.organisateur.id %}
+										{# Si utilisateur : afficher l'événement #}
+										{% if is_granted("ROLE_USER") %}
+											<a class="btn button primary" href="{{ path('app_sortie_show', {'id': sortie.id}) }}">
+												<i class="fa-solid fa-eye"></i>
+											</a>
+											{# Si administrateur ou organisateur : editer l'événement #}
+											{% if is_granted("ROLE_ADMIN") or app.user.id == sortie.organisateur.id %}
 												<a class="btn button warning" href="{{ path('app_sortie_edit', {'id': sortie.id}) }}">
 													<i class="fa-solid fa-pen"></i>
 												</a>
+											{% endif %}
+
+											{% if is_granted("ROLE_ADMIN") or app.user.id != sortie.organisateur.id  %}
+												{% if sortie.dateDebut|date("Y-m-d") > "now"|date("Y-m-d") %}
+													{% if sortie.participants is empty %}
+														<a class="btn button success" href="{{ path('app_sortie_signup', {'id': sortie.id}) }}">
+															<i class="fa-solid fa-plus"></i>
+														{% else %}
+															{% set inscrit = false %}
+															{% for participant in sortie.participants %}
+																{% if app.user.id == participant.utilisateur.id %}
+																	<a class="btn button alert" href="{{ path('app_sortie_signout', {'id': sortie.id}) }}">
+																		<i class="fa-solid fa-trash"></i>
+																	</a>
+																	{% set inscrit = true %}
+																{% endif %}
+															{% endfor %}
+
+															{% if not inscrit %}
+																<a class="btn button success" href="{{ path('app_sortie_signup', {'id': sortie.id}) }}">
+																	<i class="fa-solid fa-plus"></i>
+																</a>
+															{% endif %}
+															{% set flag = true %}
+														{% endif %}
+													{% endif %}
+													{% for participant in sortie.participants %}{% endfor %}
+												{% endif %}
 											{% endif %}
 										</td>
 									</td>
 								</tr>
 								{% else %}
 								{# <tr>
-																																<td colspan="10">no records found</td>
-																															</tr> #}
+																																																																																																																																																																																<td colspan="10">no records found</td>
+																																																																																																																																																																															</tr> #}
 							{% endif %}
 						{% endfor %}
 					</tbody>
